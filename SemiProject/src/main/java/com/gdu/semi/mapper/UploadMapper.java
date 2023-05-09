@@ -1,6 +1,6 @@
 package com.gdu.semi.mapper;
 
-@Mapper
+//@Mapper
 public interface UploadMapper {
 
 }
