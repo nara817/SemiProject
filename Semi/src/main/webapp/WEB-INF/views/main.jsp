@@ -14,8 +14,8 @@
 <body>
 	<div class="login_area">
 		<div class="login_button">
-		<a href="${contextPath}/member/login">로그인</a></div>
-		<span><a href="${contextPath}/member/join">회원가입</a></span>
+		<a href="${contextPath}/user/login">로그인</a></div>
+		<span><a href="${contextPath}/user/join">회원가입</a></span>
 	</div>
 
 </body>

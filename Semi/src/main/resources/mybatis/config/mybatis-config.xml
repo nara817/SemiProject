@@ -12,7 +12,7 @@
 
 	<!-- typeAliases -->
 	<typeAliases>
-		<typeAlias alias="MemberDTO" type="com.gdu.semi.domain.MemberDTO" />
+		<typeAlias alias="UserDTO" type="com.gdu.semi.domain.UserDTO" />
 	</typeAliases>
 
 </configuration>
