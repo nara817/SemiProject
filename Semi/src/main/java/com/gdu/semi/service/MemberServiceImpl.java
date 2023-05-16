@@ -3,23 +3,23 @@ package com.gdu.semi.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gdu.semi.domain.UserDTO;
-import com.gdu.semi.mapper.UserMapper;
+import com.gdu.semi.domain.MemberDTO;
+import com.gdu.semi.mapper.MemberMapper;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class MemberServiceImpl implements MemberService {
 
 	@Autowired
-	UserMapper userMapper;
+	MemberMapper memberMapper;
 	
 	@Override
-	public void memberJoin(UserDTO member) {
+	public void memberJoin(MemberDTO member) {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	@Override
-	public boolean memberLogin(UserDTO member) {
+	public boolean memberLogin(MemberDTO member) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -13,13 +13,15 @@
 <!-- 로그인버튼 -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
-<script ></script>
 </head>
 <body>
 	<div class="wrapper">
 		<!-- css 각각 wrap 싸주기  -->
 		<div class="logo_wrap">
-			<span>임시 로고</span>
+		<!-- <span>임시 로고</span> -->
+			
+ 			 <img src="${contextPath}/resources/images/logo.jpg" alt="로고" onclick="fnmain">
+			
 		</div>
 		<div class="login_area">
 			<!-- 아이디 -->
@@ -52,8 +54,6 @@
 					<div class="auto_loginbox">
 						<label for="auto_login">
 						<input type="checkbox" class="auto_login_input" id="auto_login" name="auto_login">자동 로그인
-						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-						<input type="submit" value="Login">
 						</label>
 					</div>
 				</div>
@@ -89,21 +89,11 @@
 			</div>
 		</div>
 	</div>
-	
-	
-</body>
 	<script>
 	
-	// 전역 변수(각종 검사 통과 유무를 저장하는 변수)
-	var verifyId = false; // 아이디
-	var verifyPw  = false; // 비밀번호
-	var verifyRePw   = false; // 비밀번호 재확인
-	var verifyName = false; // 이름
-	var verifyMobile = false; // 휴대폰번호
-	var verifyEmail = false; // 이메일
-	
-	
-	
+		$('#fnmain').on("click", function(){
+			location.href = "${contextPath}/main";	
+		});
 	
 		$(function() {
 			// 아이디 저장 체크박스 클릭 시 쿠키 생성

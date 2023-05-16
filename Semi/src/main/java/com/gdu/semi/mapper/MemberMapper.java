@@ -5,7 +5,7 @@ package com.gdu.semi.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface UserMapper {
+public interface MemberMapper {
 	
     //public void insertMember(MemberDTO memberDTO);
     //public MemberDTO selectMember(String memberId);
