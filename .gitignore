@@ -1,8 +1,11 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,maven,windows,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,maven,windows,macos
 
+<<<<<<< HEAD
 application.properties
 
+=======
+>>>>>>> 7adbd1d9c7ef0b30f37bd4bbe7e3d77577b8145b
 ### Eclipse ###
 .metadata
 bin/
