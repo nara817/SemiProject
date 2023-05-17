@@ -1,0 +1,187 @@
+@charset "UTF-8";
+*{
+	margin: 0;
+	padding:0;
+}
+
+/* 화면 전체 랩 */
+.wrapper{
+	max-width: 1020px;
+	margin: 0 auto;
+}
+
+/* content 랩 */
+.wrap{
+	width : 800px;
+	margin: auto;
+}
+
+/* 임시 페이지 로고 */
+.logo_wrap{
+	text-align: center;	
+	margin: 150px 0;	
+}
+.logo_wrap>span{
+	font-size : 50px;
+	font-weight: 900;
+}
+
+
+/* 로그인 area */
+
+.login_area{
+	width:100%;
+	height:100%;
+	border:none;
+	
+}
+
+.id_input_box{
+	border: 1px solid black;
+	height:31px;
+	padding: 10px 14px;	
+	display: block;
+	width : 80%;
+	margin : auto;	
+}
+.id_input{
+	width:100%;
+	height:100%;
+	border:none;
+	font-size:28px;
+}
+
+
+.pw_wrap{
+	margin-top: 40px;
+}
+.pw_input_box{
+	border: 1px solid black;
+	height:31px;
+	padding: 10px 14px;	
+	display: block;
+	width : 80%;
+	margin : auto;	
+}
+.pw_iput{
+	width:100%;
+	height:100%;
+	border:none;
+	font-size:28px;
+}
+
+/* 아이디 기억*/
+
+.id_checkbox_wrap{
+	margin-top: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start; /* 왼쪽 정렬 추가 */
+}
+.id_checkbox{
+	display: inline-block;
+	margin-right: 30px;
+	vertical-align: top;
+}
+
+.id_checkbox.wrap{
+	  float: left;
+  margin-right: 10px; /* 체크박스 사이 간격 조절 */
+}
+
+.auto_login_wrap{
+	  float: left;
+  margin-right: 10px; /* 체크박스 사이 간격 조절 */
+}
+
+.login_button_wrap{
+	margin-top: 40px;
+	text-align: center;
+}
+.login_button{
+	width: 84%;
+    height: 80px;
+    background-color: #BDBDBD;
+    font-size: 40px;
+    font-weight: 900;
+    color: white;
+    margin : auto;
+    display: block;
+}
+
+/* 로그인 버튼*/
+.button {
+  background: #2B2D2F;
+  height: 80px;
+  width: 200px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.text {
+  font: bold 1.25rem/1 poppins;
+  color: #71DFBE;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-52%);
+  left: 0;
+  right: 0;
+}
+
+.progress-bar {
+  position: absolute;
+  height: 10px;
+  width: 0;
+  right: 0;
+  top: 50%;
+  left: 50%;
+  border-radius: 200px;
+  transform: translateY(-50%) translateX(-50%);
+  background: lighten(#2B2D2F, 15%);
+}
+
+svg {
+  width: 30px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  left: 50%;
+  right: 0;
+}
+
+.check {
+  fill: none;
+  stroke: #FFFFFF;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* 아이디/pw찾기, 회원가입 페이지로 이동 */
+.link {
+	
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.link a {
+  text-decoration: none;
+  color: black;
+}
+
+
+/* float 속성 해제 */
+.clearfix{
+	clear: both;
+}
