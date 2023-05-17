@@ -22,24 +22,25 @@
 
   <div>
     
-    <!-- 로그인이 안 된 상태 -->
+    <!-- 로그인이 안 된 상태 메인페이지 -->
     <c:if test="${sessionScope.loginId == null}">    
       <a href="${contextPath}/user/agree.form">회원가입</a>
       <a href="${contextPath}/user/login.form">로그인</a>
     </c:if>
     
-    <!-- 로그인이 된 상태 -->
+    <!-- 로그인이 된 상태 메인페이지 -->
     <c:if test="${sessionScope.loginId != null}">
       <div>
         <a href="#">${sessionScope.loginId}</a>님 반갑습니다 ♥
       </div>
       <div>
         <a href="${contextPath}/user/logout.do">로그아웃</a>
+        <a href="${contextPath}/user/mypage.form">마이페이지</a>
         <a href="javascript:fnLeave()">회원탈퇴</a>
       </div>
     </c:if>
-    
-  </div>
+     </div>
+
   
 </body>
 </html>

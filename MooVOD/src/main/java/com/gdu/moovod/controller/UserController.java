@@ -31,5 +31,11 @@ public class UserController {
 	}
 	
 	
+	// 마이 페이지
+	@GetMapping("/mypage")
+	public String showMyForm() {
+	    return "user/mypage";
+	}
+	
 
 }

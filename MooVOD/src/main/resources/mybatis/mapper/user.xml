@@ -128,7 +128,10 @@
      WHERE ID = #{id}
   </delete>
 
-
+<!-- 회원정보 수정 -->
+	<update id="updatemypage" parameterType="user">
+		UPDATE MEMBER SET EMAIL = #{email} WHERE ID = #{id}
+	</update>
 
 
 
