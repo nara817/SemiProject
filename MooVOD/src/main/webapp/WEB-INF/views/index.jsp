@@ -10,14 +10,36 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
-<script src="${contextPath}/resources/summernote-0.8.18-dist/summernote-lite.min.js"></script>
-<script src="${contextPath}/resources/summernote-0.8.18-dist/lang/summernote-ko-KR.min.js"></script>
-<link rel="stylesheet" href="${contextPath}/resources/summernote-0.8.18-dist/summernote-lite.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script>
+  function fnLeave(){
+    if(confirm('동일한 아이디로 재가입이 불가능합니다. 회원 탈퇴하시겠습니까?')){
+      location.href = '${contextPath}/user/leave.do';
+    }
+  }
+</script>
 </head>
 <body>
 
-	<a href="${contextPath}/board/list.do">게시판</a>
-	
+  <div>
+    
+    <!-- 로그인이 안 된 상태 -->
+    <c:if test="${sessionScope.loginId == null}">    
+      <a href="${contextPath}/user/agree.form">회원가입</a>
+      <a href="${contextPath}/user/login.form">로그인</a>
+    </c:if>
+    
+    <!-- 로그인이 된 상태 -->
+    <c:if test="${sessionScope.loginId != null}">
+      <div>
+        <a href="#">${sessionScope.loginId}</a>님 반갑습니다 ♥
+      </div>
+      <div>
+        <a href="${contextPath}/user/logout.do">로그아웃</a>
+        <a href="javascript:fnLeave()">회원탈퇴</a>
+      </div>
+    </c:if>
+    
+  </div>
+  
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.gdu.app12.util;
+package com.gdu.moovod.util;
 
 import java.util.Properties;
 
