@@ -5,10 +5,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="${contextPath}/resources/home/assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="${contextPath}/resources/home/css/styles.css" rel="stylesheet" />
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입 페이지</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
 
@@ -372,17 +382,7 @@
       <!-- agree.jsp에서 전달된 location, event 속성 -->
       <input type="hidden" name="location" value="${location}">
       <input type="hidden" name="event" value="${event}">
-      
-      <div>
-      <span>사용자 구분*</span>
-	  <label>
-		    <input type="radio" name="userType" id="user" value="user" checked>사용자
-	  </label>
-	  
-	  <label>
-	    	<input type="radio" name="userType" id="seller" value="seller">판매자
-	  </label>
-	  </div>
+
   
       <div>
         <label for="id">아이디*</label>
@@ -517,6 +517,14 @@
     </form>
   
   </div>
+          <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
   
 </body>
 </html>

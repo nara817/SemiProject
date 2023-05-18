@@ -265,14 +265,28 @@ public class UserServiceImpl implements UserService {
       out.close();
       
     } catch (Exception e) {
-      e.printStackTrace();
+        e.printStackTrace();
+      }
+      
     }
     
-  }
-  
-  
+    @Transactional(readOnly=true)
+    @Override
+    public void sleepUserHandle() {
+      int insertResult = userMapper.insertSleepUser();
+      if(insertResult > 0) {
+        userMapper.deleteUserForSleep();
+      }
+    }
+    
+   /* @Override
+    	public int updateMypage(HttpServletRequest request, HttpServletResponse response) {
+    		// TODO Auto-generated method stub
+    		return 0;
+    	}*/
+    
 
-}
+  }
 
 
 

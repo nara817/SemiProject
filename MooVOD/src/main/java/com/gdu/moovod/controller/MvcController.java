@@ -8,7 +8,7 @@ public class MvcController {
 	// 메인페이지
 	@GetMapping("/")
 	public String mainPage() {
-		return "main";
+		return "index";
 	}
 	
 }

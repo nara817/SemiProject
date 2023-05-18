@@ -1,7 +1,6 @@
 package com.gdu.moovod.mapper;
 
 
-
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.moovod.domain.LeaveUserDTO;
@@ -22,7 +21,8 @@ public interface UserMapper {
   public int updateUserAccess(String id);
   public int insertLeaveUser(LeaveUserDTO leaveUserDTO);
   public int deleteUser(String id);
-  public int updateMypage(UserDTO userDTO);
+  public int insertSleepUser();
+  public int deleteUserForSleep();
   
   
   

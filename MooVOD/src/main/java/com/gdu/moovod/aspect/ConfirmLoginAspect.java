@@ -1,68 +1,62 @@
 package com.gdu.moovod.aspect;
 
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.TransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import java.io.PrintWriter;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@MapperScan(basePackages={"com.gdu.moovod.mapper"})           // @Mapper가 존재하는 패키지를 작성한다.
-@PropertySource(value={"classpath:application.properties"})  // application.properties 파일의 속성을 읽어 오자!
-@EnableTransactionManagement                                 // 트랜잭션 처리를 허용한다.
-@Configuration
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+@Aspect
+@EnableAspectJAutoProxy
+@Component
 public class ConfirmLoginAspect {
 
-	@Autowired
-	private Environment env;
-	
-	// HikaryConfig Bean
-	@Bean
-	public HikariConfig hikariConfig() {
-		HikariConfig hikariConfig = new HikariConfig();
-		hikariConfig.setDriverClassName(env.getProperty("spring.datasource.hikari.driver-class-name"));
-		hikariConfig.setJdbcUrl(env.getProperty("spring.datasource.hikari.jdbc-url"));
-		hikariConfig.setUsername(env.getProperty("spring.datasource.hikari.username"));
-		hikariConfig.setPassword(env.getProperty("spring.datasource.hikari.password"));
-		return hikariConfig;
-	}
-	
-	// HikariDataSource Bean
-	@Bean(destroyMethod="close")
-	public HikariDataSource hikariDataSource() {
-		return new HikariDataSource(hikariConfig());
-	}
-	
-	// SqlSessionFactory Bean
-	@Bean
-	public SqlSessionFactory sqlSessionFactory() throws Exception {
-		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-		bean.setDataSource(hikariDataSource());
-		bean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource(env.getProperty("mybatis.config-location")));
-		bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis.mapper-locations")));
-		return bean.getObject();
-	}
-	
-	// SqlSessionTemplate Bean
-	@Bean
-	public SqlSessionTemplate sqlSessionTemplate() throws Exception {
-		return new SqlSessionTemplate(sqlSessionFactory());
-	}
-	
-	// TransactionManager Bean
-	@Bean
-	public TransactionManager transactionManager() {
-		return new DataSourceTransactionManager(hikariDataSource());
-	}
-	
+  // 포인트컷 : ConfirmLoginAspect를 동작시키는 메소드들
+  @Pointcut("execution(* com.gdu.app12.controller.*Controller.requiredLogin_*(..))")
+  public void requiredLogin() { }
+  
+  // 조인포인트(컨트롤러의 모든 메소드)를 모두 받아온 다음 그 중에서 포인트컷에 해당하는 메소드(requiredLogin_으로 시작하는 메소드)를 동작시키기 전에 실행되는 requiredLoginHandler 메소드
+  @Before("requiredLogin()")
+  public void requiredLoginHandler(JoinPoint joinPoint) throws Exception {
+    
+    // 로그인 확인을 위해서 HttpServletRequest를 구한 뒤 HttpSession을 구한다.
+    ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+    HttpServletRequest request = servletRequestAttributes.getRequest();
+    HttpSession session = request.getSession();
+    
+    // 로그인 여부 확인
+    if(session.getAttribute("loginId") == null) {
+      
+      // 응답을 위해서 HttpServletResponse를 구한다.
+      HttpServletResponse response = servletRequestAttributes.getResponse();
+      
+      // 응답
+      response.setContentType("text/html; charset=UTF-8");
+      PrintWriter out = response.getWriter();
+      out.println("<script>");
+      out.println("if(confirm('로그인이 필요한 기능입니다. 로그인하시겠습니까?')){");
+      out.println("location.href='" + request.getContextPath() + "/user/login.form';");
+      out.println("} else {");
+      out.println("history.back();");
+      out.println("}");
+      out.println("</script>");
+      out.flush();
+      out.close();
+      
+    }
+    
+  }
+  
+  // ConfirmLoginAspect 실행 이후에 컨트롤러의 메소드가 실행되기 때문에
+  // 컨트롤러의 메소드 실행을 막을 수 있는 인터셉터로 변경한다. (사용되지 않는 클래스)
+  
 }
