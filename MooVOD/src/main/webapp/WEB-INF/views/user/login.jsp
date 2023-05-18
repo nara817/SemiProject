@@ -36,11 +36,13 @@
         <button>로그인</button>
       </div>
       
-      <div>
+      <div class="checkbox_1">
         <label for="chkRememberId">
           <input type="checkbox" id="chkRememberId">
           아이디 기억
         </label>
+        </div>
+        <div class="checkbox_2">
         <label for="autoLogin">
           <input type="checkbox" name="chkAutoLogin" id="chkAutoLogin">
           자동 로그인

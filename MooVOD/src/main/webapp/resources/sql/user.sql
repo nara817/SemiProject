@@ -79,3 +79,10 @@ CREATE TABLE SLEEP_USER_T (
     PW_MODIFIED_AT DATE,                                -- 비밀번호변경일
     SLEPT_AT       DATE                                 -- 휴면일
 );
+
+
+
+
+
+
+UPDATE MEMBER SET EMAIL = #{EMAIL} WHERE ID = #{ID}
