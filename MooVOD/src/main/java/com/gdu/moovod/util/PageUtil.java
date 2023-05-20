@@ -37,6 +37,18 @@ public class PageUtil {
       5   21    25
       6   26    26
     */
+    
+    /*
+    totalRecord=65, recordPerPage=10인 상황
+    page  begin end
+    1       1   10
+    2       11   20
+    3      21    30
+    4       31    40
+    5        41    50
+    6         51    60
+    7         61     65
+  */
     begin = (page - 1) * recordPerPage + 1;
     end = begin + recordPerPage - 1;
     if(end > totalRecord) {
@@ -56,6 +68,13 @@ public class PageUtil {
       1(1~4)    1     4
       2(5~6)    5     6
     */
+    
+    /*
+    totalPage=7, pagePerBlock=5인 상황
+    block(page) beginPage endPage
+    1(1~5)          1     5
+    2(6~7)          6     7
+  */
     beginPage = ((page - 1) / pagePerBlock) * pagePerBlock + 1;
     endPage = beginPage + pagePerBlock - 1;
     if(endPage > totalPage) {
@@ -108,3 +127,4 @@ public class PageUtil {
   }
   
 }
+

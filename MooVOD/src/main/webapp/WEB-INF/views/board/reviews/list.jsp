@@ -45,8 +45,45 @@
 			}
 		}
 	})
+	
+	
+	$(function(){
+    // recordPerPage의 변경
+    $('#recordPerPage').on('change', function(){
+      location.href = '${contextPath}/board/reviews/change/record.do?recordPerPage=' + $(this).val();  // session에 recorePerPage 올리기
+    })
+    // 세션에 저장된 recordPerPage값으로 <select> 태그의 값을 세팅
+    let recordPerPage = '${sessionScope.recordPerPage}' == '' ? '10' : '${sessionScope.recordPerPage}';
+    $('#recordPerPage').val(recordPerPage);
+    // 제목을 클릭하면 정렬 방식을 바꿈
+    $('.title').on('click', function(){
+      location.href = '${contextPath}/board/reviews/list.do?column=' + $(this).data('column') + '&order=' + $(this).data('order') + "&page=${page}";
+    })
+  })
 </script>
 <style type="text/css">
+
+.pagination1 {
+  display: inline-block;
+}
+
+.pagination1 a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination1 a.active {
+  background-color: #525252;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination1 a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}
 
 td {
     display: table-cell;
@@ -100,11 +137,11 @@ margin-bottom:10px;
 			<table class="table">
 				<thead class="text-center text-black">
 					 <tr>
-				      <th scope="col">게시글번호</th>
-				      <th scope="col">제목</th>
-				      <th scope="col">작성자</th>
-				      <th scope="col">날짜</th>
-				      <th scope="col">조회수</th>
+				      <th scope="col" data-column="REVIEW_NO" data-order="${order}">게시글번호</th>
+				      <th scope="col" data-column="REVIEW_TITLE" data-order="${order}">제목</th>
+				      <th scope="col" data-column="REVIEW_WRITER" data-order="${order}">작성자</th>
+				      <th scope="col" data-column="REVIEW_CREATED_AT" data-order="${order}">날짜</th>
+				      <th scope="col" data-column="REVIEW_HITS" data-order="${order}">조회수</th>
 				     </tr>
 				</thead>
 				
@@ -115,9 +152,9 @@ margin-bottom:10px;
 					</tr>
 					</c:if>
 					<c:if test="${not empty reviewsList}">
-					<c:forEach items="${reviewsList}" var="r">
+					<c:forEach items="${reviewsList}" var="r" varStatus="vs">
 						<tr>
-							<td>${r.reviewNo}</td>
+							<td>${beginNo - vs.index}</td>
 							<td><a href="${contextPath}/board/reviews/detail.do?reviewNo=${r.reviewNo}" >${r.reviewTitle}</a></td>
 							<td>${r.reviewWriter}</td>
 							<td>${r.reviewCreatedAt}</td>
@@ -135,6 +172,18 @@ margin-bottom:10px;
 			</tfoot>
 			</table>
 		</div>
+    
+    <div class="pagination">
+      <a href="#">&laquo;</a>
+      <a href="#">1</a>
+      <a href="#" class="active">2</a>
+      <a href="#">3</a>
+      <a href="#">4</a>
+      <a href="#">5</a>
+      <a href="#">6</a>
+      <a href="#">&raquo;</a>
+    </div>
+        
 
 	<div class="text-right">
 		<input type="button" value="새글 작성하기" onclick="fnNewWrite()">

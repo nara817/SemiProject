@@ -2,47 +2,106 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
- <!-- namespace는 @Mapper를 지정한다. -->
+
+<!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.moovod.mapper.ReviewsMapper">
 
-<select id="getReviewsList"  resultType="ReviewsDTO">
-	SELECT REVIEW_NO, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS
-	  FROM REVIEWS
-	 ORDER BY REVIEW_NO DESC
-</select>
+	<select id="getReviewsList" resultType="ReviewsDTO">
+		SELECT REVIEW_NO, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT,
+		REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS
+		FROM REVIEWS
+		ORDER BY REVIEW_NO DESC
+	</select>
 
-<insert id="insertReviews" parameterType="ReviewsDTO">
-	 	INSERT INTO REVIEWS
-	 	    (REVIEW_NO, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS)
-	 	VALUES
-	 		(REVIEWS_SEQ.NEXTVAL, #{reviewTitle}, #{reviewWriter}, #{reviewContent}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), REVIEWS_SEQ.NEXTVAL)
-</insert>
+	<insert id="insertReviews" parameterType="ReviewsDTO">
+		INSERT INTO REVIEWS
+		(REVIEW_NO, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_CREATED_AT,
+		REVIEW_MODIFIED_AT, REVIEW_HITS)
+		VALUES
+		(REVIEWS_SEQ.NEXTVAL, #{reviewTitle}, #{reviewWriter}, #{reviewContent}, TO_CHAR(SYSDATE,
+		'YYYY-MM-DD HH24:MI:SS'), TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+		#{reviewHits})
+	</insert>
 
- <select id="selectReviewsByNo" parameterType="int" resultType="ReviewsDTO">
-   SELECT REVIEW_NO, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS
-	 FROM REVIEWS
-    WHERE REVIEW_NO = #{reviewNo}
- </select>
- 
- <update id="up" parameterType="int">
-  UPDATE REVIEWS
-     SET REVIEW_HITS = REVIEW_HITS + 1
-   WHERE REVIEW_NO = #{reviewNo}
- </update>
- 
- <update id="updateReviews" parameterType="ReviewsDTO">
-    UPDATE REVIEWS
-       SET REVIEW_TITLE = #{reviewTitle}
-         , REVIEW_CONTENT = #{reviewContent}
-         , REVIEW_MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
-     WHERE REVIEW_NO = #{reviewNo}
-  </update>
+	<select id="selectReviewsByNo" parameterType="int"
+		resultType="ReviewsDTO">
+		SELECT REVIEW_NO, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT,
+		REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS
+		FROM REVIEWS
+		WHERE REVIEW_NO = #{reviewNo}
+	</select>
+
+	<update id="up" parameterType="int">
+		UPDATE REVIEWS
+		SET REVIEW_HITS = REVIEW_HITS + 1
+		WHERE REVIEW_NO = #{reviewNo}
+	</update>
+
+	<update id="updateReviews" parameterType="ReviewsDTO">
+		UPDATE REVIEWS
+		SET REVIEW_TITLE = #{reviewTitle}
+		, REVIEW_CONTENT = #{reviewContent}
+		, REVIEW_MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+		WHERE REVIEW_NO = #{reviewNo}
+	</update>
+
+	<delete id="deleteReviews" parameterType="int">
+		DELETE
+		FROM REVIEWS
+		WHERE REVIEW_NO = #{reviewNo}
+	</delete>
+
+
+
+
+
+
+
+
+<!-- pagination -->
+
+
+	<select id="getReviewsCount" resultType="int">
+		SELECT COUNT(*)
+		FROM REVIEWS
+	</select>
+	
+	
+<!-- 	 <select id="getReviewsListUsingPagination" parameterType="Map" resultMap="ReviewsMap">
+    SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID, 0) AS DEPARTMENT_ID, NVL(A.DEPARTMENT_NAME, 'None') AS DEPARTMENT_NAME
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY ${column} ${order}) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
+              FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
+                ON D.DEPARTMENT_ID = E.DEPARTMENT_ID) A
+     WHERE A.RN BETWEEN #{begin} AND #{end}
+  </select> -->
   
-    <delete id="deleteReviews" parameterType="int">
-    	DELETE
-      	  FROM REVIEWS
-    	 WHERE REVIEW_NO = #{reviewNo}
-  </delete>
+  <!-- DEPARTMENTS와 EMPLOYEES의 JOIN 결과를 저장할 resultMap 만들기 -->
+  <resultMap type="ReviewsDTO" id="ReviewsMap">
+    <id column="REVIEW_NO" property="reviewNo" />
+    <result column="REVIEW_TITLE" property="reviewTitle" />
+    <result column="REVIEW_WRITER" property="reviewWriter" />
+    <result column="REVIEW_CONTENT" property="reviewContent" />
+    <result column="REVIEW_CREATED_AT" property="reviewCreatedAt" />
+    <result column="REVIEW_MODIFIED_AT" property="reviewModifiedAt" />
+    <result column="REVIEW_HITS" property="reviewHits" />
+</resultMap>
+  
+  <select id="getReviewsListUsingPagination" parameterType="Map" resultMap="ReviewsMap">
+    SELECT REVIEW_NO, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS
+      FROM (
+      SELECT
+		        REVIEW_NO,
+		        REVIEW_TITLE,
+		        REVIEW_WRITER,
+		        REVIEW_CONTENT,
+		        REVIEW_CREATED_AT,
+		        REVIEW_MODIFIED_AT,
+		        REVIEW_HITS,
+		        ROW_NUMBER() OVER (ORDER BY ${column} ${order}) AS RN
+        FROM
+        REVIEWS
+        ) A
+        WHERE A.RN BETWEEN #{begin} AND #{end}
+  </select>
 
 </mapper>

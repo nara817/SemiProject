@@ -1,6 +1,7 @@
 package com.gdu.moovod.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,6 +16,14 @@ public interface ReviewsMapper {
 	public int up(int reviewNo);
 	public int updateReviews(ReviewsDTO reviewsDTO);
 	public int deleteReviews(int reviewNo);
+	
+	
+	//pagination 서비스
+	public int getReviewsCount();
+  public List<ReviewsDTO> getReviewsListUsingPagination(Map<String, Object> map);
+  
+  
+ 
 
 
 }
