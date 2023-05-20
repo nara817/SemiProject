@@ -12,7 +12,7 @@
 
 	<!-- typeAliases -->
 	<typeAliases>
-		<typeAlias alias="ReviewsDTO" type="com.gdu.moovod.domain.ReviewsDTO"/>
-	</typeAliases>
+      <typeAlias alias="ReviewsDTO" type="com.gdu.moovod.domain.ReviewsDTO"/>
+  </typeAliases>
 
 </configuration>
