@@ -21,6 +21,9 @@
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script src="${contextPath}/resources/home/js/scripts.js"></script>
 <script>
+$(function(){
+	  $('#edit_screen').hide();  // 최초 편집화면은 숨김
+	})
 function fnEdit(){
 	$('#edit_screen').show();
 	$('#detail_screen').hide();
@@ -37,24 +40,7 @@ function fnBack(){
 	$('#edit_screen').hide();
 	$('#detail_screen').show();
 }
-$(function(){
-	$('#content').summernote({
-		width: 640,
-		height: 480,
-		lang: 'ko-KR',
-		toolbar: [
-			['style', ['bold', 'italic', 'underline', 'clear']],
-			['font', ['strikethrough', 'superscript', 'subscript']],
-			['fontname', ['fontname']],
-			['color', ['color']],
-			['para', ['ul', 'ol', 'paragraph']],
-			['table', ['table']],
-			['insert', ['link', 'picture', 'video']],
-			['view', ['fullscreen', 'codeview', 'help']]
-		]
-	})
-	$('#edit_screen').hide();  // 최초 편집화면은 숨김
-})
+
 </script>
 <style>
 
@@ -65,6 +51,7 @@ $(function(){
 <section class="py-5">
 		<div id="detail_screen"  class="px-4 px-lg-5 mt-5 text-center text-black">
 		<h1>${r.reviewNo}번 게시글 상세보기</h1>
+		<div>카테고리 : ${r.reviewCategory}</div>
 		<div>제목 : ${r.reviewTitle}</div>
 		<div>작성자 : ${r.reviewWriter}</div>
 		<div>작성일 : ${r.reviewCreatedAt}</div>
@@ -89,6 +76,10 @@ $(function(){
 				<label for="reviewTitle">제목</label>
 				<input type="text" id="reviewTitle" name="reviewTitle" value="${r.reviewTitle}">
 			</div>
+      <div>
+        <label for="reviewCategory">카테고리</label>
+        <input type="text" id="reviewCategory" name="reviewCategory" value="${r.reviewCategory}">
+      </div>
 			<div>
 				<div><label for="reviewContent">내용</label></div>
 				<textarea id="content" name="reviewContent">${r.reviewContent}</textarea>  <!-- summernote 편집기로 바뀌는 textarea -->

@@ -43,23 +43,6 @@
 	
 	
 	
-	$(function(){
-		$('#content').summernote({
-			width: 640,
-			height: 480,
-			lang: 'ko-KR',
-			toolbar: [
-				['style', ['bold', 'italic', 'underline', 'clear']],
-				['font', ['strikethrough', 'superscript', 'subscript']],
-				['fontname', ['fontname']],
-				['color', ['color']],
-				['para', ['ul', 'ol', 'paragraph']],
-				['table', ['table']],
-				['insert', ['link', 'picture', 'video']],
-				['view', ['fullscreen', 'codeview', 'help']]
-			]
-		})
-	})
 	
 </script>
 <style>
@@ -81,6 +64,11 @@ html, body {
 	<div class="text-center">
 		<h1>작성화면</h1>
 		<form method="post" action="${contextPath}/board/reviews/add.do">
+  
+      <div>
+        <label for="reviewCategory"></label>
+        <input type="text" id="reviewCategory" name="reviewCategory" placeholder="카테고리">
+      </div>
 			<div>
 				<label for="reviewTitle"></label>
 				<input type="text" id="reviewTitle" name="reviewTitle" placeholder="제목">

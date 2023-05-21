@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
@@ -16,11 +17,29 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="${contextPath}/resources/home/css/styles.css" rel="stylesheet" />
+        <link href="${contextPath}/resources/bootstrap-4.6.2/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>SemiProject - PLAYON</title>
+<title>MOOVOD</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script src="${contextPath}/resources/home/js/scripts.js"></script>
+<script src="${contextPath}/resources/bootstrap-4.6.2/js/bootstrap.min.js"></script>
 <script>
+$(function(){
+    // recordPerPage의 변경
+    $('#recordPerPage').on('change', function(){
+      location.href = '${contextPath}/board/reviews/change/record.do?recordPerPage=' + $(this).val();  // session에 recorePerPage 올리기
+    }) 
+    // 세션에 저장된 recordPerPage값으로 <select> 태그의 값을 세팅
+    let recordPerPage = '${sessionScope.recordPerPage}' == '' ? '10' : '${sessionScope.recordPerPage}';
+    $('#recordPerPage').val(recordPerPage);
+    // 제목을 클릭하면 정렬 방식을 바꿈
+    $('.title').on('click', function(){
+      location.href = '${contextPath}/board/reviews/list.do?column=' + $(this).data('column') + '&order=' + $(this).data('order') + "&page=${page}";
+    })
+  })
 	function fnNewWrite() {
 		location.href='${contextPath}/board/reviews/write.do';
 	}
@@ -47,63 +66,38 @@
 	})
 	
 	
-	$(function(){
-    // recordPerPage의 변경
-    $('#recordPerPage').on('change', function(){
-      location.href = '${contextPath}/board/reviews/change/record.do?recordPerPage=' + $(this).val();  // session에 recorePerPage 올리기
-    })
-    // 세션에 저장된 recordPerPage값으로 <select> 태그의 값을 세팅
-    let recordPerPage = '${sessionScope.recordPerPage}' == '' ? '10' : '${sessionScope.recordPerPage}';
-    $('#recordPerPage').val(recordPerPage);
-    // 제목을 클릭하면 정렬 방식을 바꿈
-    $('.title').on('click', function(){
-      location.href = '${contextPath}/board/reviews/list.do?column=' + $(this).data('column') + '&order=' + $(this).data('order') + "&page=${page}";
-    })
-  })
 </script>
 <style type="text/css">
 
-.pagination1 {
-  display: inline-block;
-}
 
-.pagination1 a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-}
+.title {
+    cursor: pointer;
+  }
+  .title:hover {
+    color: gray;
+  }
+  .title:active {
+    color: silver;
+  }
+  .pagination {
+    width: 350px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .pagination span, .pagination a {
+    display: inline-block;
+    margin: 0 15px;
+  }
+  .hidden {
+    visibility: hidden;
+  }
+  .strong {
+    font-weight: 900;
+  }
+  .link {
+    color: gray;
+  }
 
-.pagination1 a.active {
-  background-color: #525252;
-  color: white;
-  border-radius: 5px;
-}
-
-.pagination1 a:hover:not(.active) {
-  background-color: #ddd;
-  border-radius: 5px;
-}
-
-td {
-    display: table-cell;
-    vertical-align: inherit;
-    text-align: -internal-center;
-    padding: 15px 5px;
-    font-size: 12px;
-    white-space: nowrap;
-}
-
-table {
-    margin-left:auto; 
-    margin-right:auto;
-    margin-top: auto;
-}
-
-table, tr, td {
-    border-collapse : collapse;
-    border : 1px solid black;
-}
 
 
 
@@ -126,35 +120,41 @@ margin-bottom:10px;
 		<div class="text-center text-black">
 		<h1>리뷰게시판</h1>
 		</div>
-		<div>페이지보기
-			<select id="recordPerPage">
-				<option value="10">10개</option>
-				<option value="20">20개</option>
-				<option value="30">30개</option>
-			</select>
-		</div>
+    <div>페이지보기
+      <select id="recordPerPage">
+        <option value="10">10개</option>
+        <option value="20">20개</option>
+        <option value="30">30개</option>
+      </select> 
+    </div>
+    
+    
+    
+    
 		<div>
 			<table class="table">
 				<thead class="text-center text-black">
 					 <tr>
-				      <th scope="col" data-column="REVIEW_NO" data-order="${order}">게시글번호</th>
+				      <th scope="col" data-column="REVIEW_NO" data-order="${order}">번호</th>
+				      <th scope="col" data-column="REVIEW_CATEGORY" data-order="${order}">카테고리</th>
 				      <th scope="col" data-column="REVIEW_TITLE" data-order="${order}">제목</th>
 				      <th scope="col" data-column="REVIEW_WRITER" data-order="${order}">작성자</th>
-				      <th scope="col" data-column="REVIEW_CREATED_AT" data-order="${order}">날짜</th>
-				      <th scope="col" data-column="REVIEW_HITS" data-order="${order}">조회수</th>
+				      <th scope="col" class="title" data-column="REVIEW_CREATED_AT" data-order="${order}">날짜</th>
+				      <th scope="col" class="title" data-column="REVIEW_HITS" data-order="${order}">조회수</th>
 				     </tr>
 				</thead>
 				
 				<tbody class="text-center text-black">
 					<c:if test="${empty reviewsList}">
 					<tr>
-						<td colspan="5">게시글이 없습니다.</td>
+						<td colspan="6">게시글이 없습니다.</td>
 					</tr>
 					</c:if>
 					<c:if test="${not empty reviewsList}">
 					<c:forEach items="${reviewsList}" var="r" varStatus="vs">
 						<tr>
 							<td>${beginNo - vs.index}</td>
+              <td>${r.reviewCategory}</td>
 							<td><a href="${contextPath}/board/reviews/detail.do?reviewNo=${r.reviewNo}" >${r.reviewTitle}</a></td>
 							<td>${r.reviewWriter}</td>
 							<td>${r.reviewCreatedAt}</td>
@@ -165,7 +165,7 @@ margin-bottom:10px;
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="5">
+					<td colspan="6">
 						${pagination}
 					</td>
 				</tr>
@@ -173,23 +173,11 @@ margin-bottom:10px;
 			</table>
 		</div>
     
-    <div class="pagination">
-      <a href="#">&laquo;</a>
-      <a href="#">1</a>
-      <a href="#" class="active">2</a>
-      <a href="#">3</a>
-      <a href="#">4</a>
-      <a href="#">5</a>
-      <a href="#">6</a>
-      <a href="#">&raquo;</a>
-    </div>
-        
 
-	<div class="text-right">
-		<input type="button" value="새글 작성하기" onclick="fnNewWrite()">
+  	<div class="text-right">
+  		<input type="button" value="새글 작성하기" onclick="fnNewWrite()">
+  	</div>
 	</div>
-	</div>
-
 </section>
 
 
