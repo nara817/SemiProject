@@ -19,5 +19,6 @@ public class ReviewsDTO {
 	private Timestamp reviewCreatedAt;
 	private Timestamp reviewModifiedAt;
 	private int reviewHits;
+	private double reviewStar;
 
 }

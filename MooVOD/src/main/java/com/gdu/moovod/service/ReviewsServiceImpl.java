@@ -44,12 +44,14 @@ public class ReviewsServiceImpl implements ReviewsService {
         			String title = request.getParameter("reviewTitle");
         			String writer = request.getParameter("reviewWriter");
         			String content = request.getParameter("reviewContent");
+        			Double star =Double.parseDouble(request.getParameter("reviewStar"));
         			
         			ReviewsDTO reviews = new ReviewsDTO();
         			reviews.setReviewCategory(category);
         			reviews.setReviewTitle(title);
         			reviews.setReviewWriter(writer);
         			reviews.setReviewContent(content);
+        			reviews.setReviewStar(star);
         			return reviewsMapper.insertReviews(reviews);
         		} catch (Exception e) {
         			return 0;
@@ -76,13 +78,16 @@ public class ReviewsServiceImpl implements ReviewsService {
         	  String category = request.getParameter("reviewCategory");
         		String title = request.getParameter("reviewTitle");
         		String content = request.getParameter("reviewContent");
+        	  double star = Double.parseDouble(request.getParameter("reviewStar"));
         		int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
         
         		ReviewsDTO reviewsDTO = new ReviewsDTO();
         		reviewsDTO.setReviewCategory(category);
         		reviewsDTO.setReviewTitle(title);
         		reviewsDTO.setReviewContent(content);
+        		reviewsDTO.setReviewStar(star);
         		reviewsDTO.setReviewNo(reviewNo);
+        		
         		
         		int modifyResult = reviewsMapper.updateReviews(reviewsDTO);
         		
@@ -144,64 +149,72 @@ public class ReviewsServiceImpl implements ReviewsService {
         	
 	
 //pagination 서비스
-	
 
-          	@Override
-          	public void getReviewsListUsingPagination(HttpServletRequest request, Model model) {
-          	  String test = request.getParameter("recordPerPage");
-          	// 파라미터 page가 전달되지 않는 경우 page=1로 처리한다.
-              Optional<String> opt1 = Optional.ofNullable(request.getParameter("page"));
-              int page = Integer.parseInt(opt1.orElse("1"));
-              
-              
-              
-              // 전체 레코드 개수를 구한다.
-              int totalRecord = reviewsMapper.getReviewsCount();
-          
-              
-              // 세션에 있는 recordPerPage를 가져온다. 세션에 없는 경우 recordPerPage=10으로 처리한다.
-              HttpSession session = request.getSession();
-              Optional<Object> opt2 = Optional.ofNullable(session.getAttribute("recordPerPage"));
-              int recordPerPage = (int)(opt2.orElse(10));
+        	
+        	@Override
+        	public void getReviewsListUsingPagination(HttpServletRequest request, Model model) {
+        	    // 'page' 매개변수가 제공되지 않으면 1로 설정합니다.
+        	    Optional<String> opt1 = Optional.ofNullable(request.getParameter("page"));
+        	    int page = Integer.parseInt(opt1.orElse("1"));
 
-              // 파라미터 order가 전달되지 않는 경우 order=ASC로 처리한다.
-              Optional<String> opt3 = Optional.ofNullable(request.getParameter("order"));
-              String order = opt3.orElse("DESC");
+        	    // 총 레코드 수를 가져옵니다.
+        	    int totalRecord = reviewsMapper.getReviewsCount();
 
-              // 파라미터 column이 전달되지 않는 경우 column=EMPLOYEE_ID로 처리한다.
-              Optional<String> opt4 = Optional.ofNullable(request.getParameter("column"));
-              String column = opt4.orElse("REVIEW_NO");
-              
-              // PageUtil(Pagination에 필요한 모든 정보) 계산하기
-              pageUtil.setPageUtil(page, totalRecord, recordPerPage);
-              // DB로 보낼 Map 만들기
-              Map<String, Object> map = new HashMap<String, Object>();
-              map.put("begin", pageUtil.getBegin());
-              map.put("end", pageUtil.getEnd());
-              map.put("order", order);
-              map.put("column", column);
-              
-          
-              
-              // begin ~ end 사이의 목록 가져오기
-              List<ReviewsDTO> reviewsList = reviewsMapper.getReviewsListUsingPagination(map);
-              
-              // pagination.jsp로 전달할(forward)할 정보 저장하기
-              model.addAttribute("reviewsList", reviewsList);
-              model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/board/reviews/list.do?column=" + column + "&order=" + order));
-              model.addAttribute("beginNo", totalRecord - (page - 1) * recordPerPage);
-              switch(order) {
-              case "ASC" : model.addAttribute("order", "DESC"); break;  // 현재 ASC 정렬이므로 다음 정렬은 DESC이라고 Jsp에 알려준다.
-              case "DESC": model.addAttribute("order", "ASC"); break;
-              }
-              model.addAttribute("page", page);
-              model.addAttribute("reviewsList", reviewsList);
-          	}
-          	
-          	
-          
+        	    // 세션에서 'recordPerPage' 값을 가져옵니다. 세션에 없을 경우 10으로 기본값을 설정합니다.
+        	    HttpSession session = request.getSession();
+        	    Optional<Object> opt2 = Optional.ofNullable(session.getAttribute("recordPerPage"));
+        	    int recordPerPage = (int) (opt2.orElse(10));
 
-           
+        	    // 'order' 매개변수가 제공되지 않으면 'DESC'로 설정합니다.
+        	    Optional<String> opt3 = Optional.ofNullable(request.getParameter("order"));
+        	    String order = opt3.orElse("DESC");
+
+        	    // 'column' 매개변수가 제공되지 않으면 'REVIEW_NO'로 설정합니다.
+        	    Optional<String> opt4 = Optional.ofNullable(request.getParameter("column"));
+        	    String column = opt4.orElse("REVIEW_NO");
+
+        	    // 'recordPerPage' 값이 변경되었을 때, 현재 페이지의 데이터가 없는 경우를 확인합니다.
+        	    int totalPage = (int) Math.ceil((double) totalRecord / recordPerPage);
+        	    if ((page - 1) * recordPerPage >= totalRecord) {
+        	        page = Math.max(totalPage, 1);
+        	    }
+
+        	    // 페이지 유틸리티(PageUtil)를 계산합니다. (페이지네이션에 필요한 모든 정보 포함)
+        	    pageUtil.setPageUtil(page, totalRecord, recordPerPage);
+        	    // 데이터베이스로 전달할 맵(Map)을 생성합니다.
+        	    Map<String, Object> map = new HashMap<String, Object>();
+        	    map.put("begin", pageUtil.getBegin());
+        	    map.put("end", pageUtil.getEnd());
+        	    map.put("order", order);
+        	    map.put("column", column);
+
+        	    // 지정된 범위(begin ~ end)의 목록을 가져옵니다.
+        	    List<ReviewsDTO> reviewsList = reviewsMapper.getReviewsListUsingPagination(map);
+
+        	    // pagination.jsp로 전달할 정보를 저장합니다.
+        	    model.addAttribute("reviewsList", reviewsList);
+        	    model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/board/reviews/list.do?column=" + column + "&order=" + order));
+        	    model.addAttribute("beginNo", totalRecord - (page - 1) * recordPerPage);
+        	    switch (order) {
+        	        case "ASC":
+        	            model.addAttribute("order", "DESC");
+        	            break;  // 현재 정렬 순서가 ASC인 경우, 다음 정렬은 DESC임을 JSP에 알립니다.
+        	        case "DESC":
+        	            model.addAttribute("order", "ASC");
+        	            break;
+        	    }
+        	    model.addAttribute("page", page);
+        	    model.addAttribute("reviewsList", reviewsList);
+
+        	    // 마지막 페이지로 이동하는 경우 파라미터 값도 같이 변경합니다.
+        	    if (page > totalPage) {
+        	        // 마지막 페이지로 설정합니다.
+        	        page = totalPage;
+        	        // 파라미터 값을 변경합니다.
+        	        map.put("begin", pageUtil.getBegin());
+        	        map.put("end", pageUtil.getEnd());
+        	    }
+        	}
             
           	
           	

@@ -6,51 +6,53 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.moovod.mapper.ReviewsMapper">
 
-	<select id="getReviewsList" resultType="ReviewsDTO">
-		SELECT REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT,
-		REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS
-		FROM REVIEWS
-		ORDER BY REVIEW_NO DESC
-	</select>
+  <select id="getReviewsList" resultType="ReviewsDTO">
+    SELECT REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT,
+    REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS, REVIEW_STAR
+    FROM REVIEWS
+    ORDER BY REVIEW_NO DESC
+  </select>
 
-	<insert id="insertReviews" parameterType="ReviewsDTO">
-		INSERT INTO REVIEWS
-		(REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_CREATED_AT,
-		REVIEW_MODIFIED_AT, REVIEW_HITS)
-		VALUES
-		(REVIEWS_SEQ.NEXTVAL, #{reviewCategory}, #{reviewTitle}, #{reviewWriter}, #{reviewContent}, TO_CHAR(SYSDATE,
-		'YYYY-MM-DD HH24:MI:SS'), TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
-		#{reviewHits})
-	</insert>
+  <insert id="insertReviews" parameterType="ReviewsDTO">
+    INSERT INTO REVIEWS
+    (REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_CREATED_AT,
+    REVIEW_MODIFIED_AT, REVIEW_HITS, REVIEW_STAR)
+    VALUES
+    (REVIEWS_SEQ.NEXTVAL, #{reviewCategory}, #{reviewTitle}, #{reviewWriter}, #{reviewContent}, TO_CHAR(SYSDATE,
+    'YYYY-MM-DD HH24:MI:SS'), TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+    #{reviewHits}, #{reviewStar})
+  </insert>
 
-	<select id="selectReviewsByNo" parameterType="int"
-		resultType="ReviewsDTO">
-		SELECT REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS
-		FROM REVIEWS
-		WHERE REVIEW_NO = #{reviewNo}
-	</select>
+  <select id="selectReviewsByNo" parameterType="int"
+    resultType="ReviewsDTO">
+    SELECT REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS, REVIEW_STAR
+    FROM REVIEWS
+    WHERE REVIEW_NO = #{reviewNo}
+  </select>
 
-	<update id="up" parameterType="int">
-		UPDATE REVIEWS
-		SET REVIEW_HITS = REVIEW_HITS + 1
-		WHERE REVIEW_NO = #{reviewNo}
-	</update>
+  <update id="up" parameterType="int">
+    UPDATE REVIEWS
+    SET REVIEW_HITS = REVIEW_HITS + 1
+    WHERE REVIEW_NO = #{reviewNo}
+  </update>
 
-	<update id="updateReviews" parameterType="ReviewsDTO">
-		UPDATE REVIEWS
-		SET 
-		  REVIEW_CATEGORY = #{reviewCategory}
-		, REVIEW_TITLE = #{reviewTitle}
-		, REVIEW_CONTENT = #{reviewContent}
-		, REVIEW_MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
-		WHERE REVIEW_NO = #{reviewNo}
-	</update>
+  <update id="updateReviews" parameterType="ReviewsDTO">
+    UPDATE REVIEWS
+    SET 
+      REVIEW_CATEGORY = #{reviewCategory}
+    , REVIEW_TITLE = #{reviewTitle}
+    , REVIEW_CONTENT = #{reviewContent}
+    , REVIEW_MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+    , REVIEW_STAR = #{reviewStar}
+    
+    WHERE REVIEW_NO = #{reviewNo}
+  </update>
 
-	<delete id="deleteReviews" parameterType="int">
-		DELETE
-		FROM REVIEWS
-		WHERE REVIEW_NO = #{reviewNo}
-	</delete>
+  <delete id="deleteReviews" parameterType="int">
+    DELETE
+    FROM REVIEWS
+    WHERE REVIEW_NO = #{reviewNo}
+  </delete>
 
 
 
@@ -62,11 +64,11 @@
 <!-- pagination -->
 
 
-	<select id="getReviewsCount" resultType="int">
-		SELECT COUNT(*)
-		FROM REVIEWS
-	</select>
-	
+  <select id="getReviewsCount" resultType="int">
+    SELECT COUNT(*)
+    FROM REVIEWS
+  </select>
+  
   
   <!-- DEPARTMENTS와 EMPLOYEES의 JOIN 결과를 저장할 resultMap 만들기 -->
   <resultMap type="ReviewsDTO" id="ReviewsMap">
@@ -78,21 +80,23 @@
     <result column="REVIEW_CREATED_AT" property="reviewCreatedAt" />
     <result column="REVIEW_MODIFIED_AT" property="reviewModifiedAt" />
     <result column="REVIEW_HITS" property="reviewHits" />
+    <result column="REVIEW_STAR" property="reviewStar" />
 </resultMap>
   
   <select id="getReviewsListUsingPagination" parameterType="Map" resultMap="ReviewsMap">
-    SELECT REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS
+    SELECT REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS, REVIEW_STAR
       FROM (
       SELECT
-		        REVIEW_NO,
-		        REVIEW_CATEGORY,
-		        REVIEW_TITLE,
-		        REVIEW_WRITER,
-		        REVIEW_CONTENT,
-		        REVIEW_CREATED_AT,
-		        REVIEW_MODIFIED_AT,
-		        REVIEW_HITS,
-		        ROW_NUMBER() OVER (ORDER BY ${column} ${order}) AS RN
+            REVIEW_NO,
+            REVIEW_CATEGORY,
+            REVIEW_TITLE,
+            REVIEW_WRITER,
+            REVIEW_CONTENT,
+            REVIEW_CREATED_AT,
+            REVIEW_MODIFIED_AT,
+            REVIEW_HITS,
+            REVIEW_STAR,
+            ROW_NUMBER() OVER (ORDER BY ${column} ${order}) AS RN
         FROM
         REVIEWS
         ) A

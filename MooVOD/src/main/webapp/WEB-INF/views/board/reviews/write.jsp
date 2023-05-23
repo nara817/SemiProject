@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -25,25 +25,25 @@
 <link rel="stylesheet" href="${contextPath}/resources/summernote-0.8.18-dist/summernote-lite.min.css">
 <script>
 
-	function fnList() {
-		location.href = '${contextPath}/board/reviews/list.do';
-	}
-	
-	
-		$(document).ready(function() {
-		    $("#reviewContent").keyup(function(event) {
-		        if (event.which === 13) {
-		            $("#submit").click();
-		        }
-		    });
-		 
-		    $("#submit").click(function() {
-		    })
-		});
-	
-	
-	
-	
+  function fnList() {
+    location.href = '${contextPath}/board/reviews/list.do';
+  }
+  
+  
+    $(document).ready(function() {
+        $("#reviewContent").keyup(function(event) {
+            if (event.which === 13) {
+                $("#submit").click();
+            }
+        });
+     
+        $("#submit").click(function() {
+        })
+    });
+  
+  
+  
+  
 </script>
 <style>
 
@@ -61,33 +61,57 @@ html, body {
 </head>
 <body>
 
-	<div class="text-center">
-		<h1>작성화면</h1>
-		<form method="post" action="${contextPath}/board/reviews/add.do">
+  <div class="text-center">
+    <h1>작성화면</h1>
+    <form method="post" action="${contextPath}/board/reviews/add.do">
   
       <div>
         <label for="reviewCategory"></label>
-        <input type="text" id="reviewCategory" name="reviewCategory" placeholder="카테고리">
+           <select name="reviewCategory" id="reviewCategory">
+            <option value="">영화카테고리</option>
+            <option value="호러">호러</option>
+            <option value="액션">액션</option>
+            <option value="멜로">멜로</option>
+            <option value="코미디">코미디</option>
+            <option value="독립영화">독립영화</option>
+        </select>
       </div>
-			<div>
-				<label for="reviewTitle"></label>
-				<input type="text" id="reviewTitle" name="reviewTitle" placeholder="제목">
-			</div>
-			<div>
-				<label for="reviewWriter"></label>
-				<input type="text" id="reviewWriter" name="reviewWriter" placeholder="작성자">
-			</div>
-			<div>
-				<div><label for="reviewContent">내용</label></div>
-				<textarea id="reviewContent" name="reviewContent"></textarea>  <!-- summernote 편집기로 바뀌는 textarea -->
-			</div>
-			<div>
-				<button id="submit">작성완료</button>
-				<input type="button" value="목록" onclick="fnList()">
-			</div>
-		</form>
-	</div>
-	
+      <div>
+        <label for="reviewTitle"></label>
+        <input type="text" id="reviewTitle" name="reviewTitle" placeholder="제목">
+      </div>
+       <div>
+        <label for="reviewStar"></label>
+         <select id="reviewStar" name="reviewStar">
+        <option value="" selected>별점</option>
+        <option value="0">0</option>
+        <option value="0.5">0.5</option>
+        <option value="1">1</option>
+        <option value="1.5">1.5</option>
+        <option value="2">2</option>
+        <option value="2.5">2.5</option>
+        <option value="3">3</option>
+        <option value="3.5">3.5</option>
+        <option value="4">4</option>
+        <option value="4.5">4.5</option>
+        <option value="5">5</option>
+      </select> 
+      </div>
+      <div>
+        <label for="reviewWriter"></label>
+        <input type="text" id="reviewWriter" name="reviewWriter" placeholder="작성자">
+      </div>
+      <div>
+        <div><label for="reviewContent">내용</label></div>
+        <textarea id="reviewContent" name="reviewContent"></textarea>  <!-- summernote 편집기로 바뀌는 textarea -->
+      </div>
+      <div>
+        <button id="submit">작성완료</button>
+        <input type="button" value="목록" onclick="fnList()">
+      </div>
+    </form>
+  </div>
+  
 </body>
 </html>
 <%-- 정적 include : 항상 같은 모습의 페이지를 포함한다.(include 지시어) --%>

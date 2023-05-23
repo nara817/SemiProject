@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
@@ -92,6 +92,21 @@ padding-left: 30px;
   margin-right: 80rem !important;
 }
 
+.ml-12 {
+  margin-left: 12rem  !important;
+}
+
+.wd-500 {
+width: 500px;
+
+}
+.df {
+
+display: flex;
+
+
+}
+
 
 </style>
 </head>
@@ -110,7 +125,7 @@ padding-left: 30px;
                     <form class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
-                           	장바구니
+                            장바구니
                             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                         </button>
                     </form>
@@ -136,7 +151,7 @@ padding-left: 30px;
                 </div>
             </div>
         </header>
-		<hr>
+    <hr>
     <!-- navbar-->
 <div class="sticky-top bg-white">
 <nav class="menu">
@@ -267,7 +282,39 @@ padding-left: 30px;
                 </div>
             </div>
             
-                <h1 class="pt-5 text-center mr-80"">STORE</h1>
+            
+            <div id="carouselExampleIndicators" class="carousel slide wd-500 ml-12" data-ride="carousel">
+              <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+              </ol>
+              <div class="carousel-inner ">
+                <div class="carousel-item active">
+                 <img src="${contextPath}/resources/images/back1.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="${contextPath}/resources/images/back2.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="${contextPath}/resources/images/back3.jpg" class="d-block w-100" alt="...">
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+            
+            
+            
+            
+            
+                <h1 class="pt-5 text-center mr-80">STORE</h1>
                 <div class="container px-4 px-lg-5 mt-5 mr-30">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="col mb-5">
@@ -373,59 +420,11 @@ padding-left: 30px;
             </div>
             
             
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-              <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-              </ol>
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="${contextPath}/resources/images/animal1.jpg" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="${contextPath}/resources/images/animal2.jpg" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="${contextPath}/resources/images/animal3.jpg" class="d-block w-100" alt="...">
-                </div>
-              </div>
-              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
             
             
             
             
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="${contextPath}/resources/images/animal1.jpg" width="900px" class="d-block" alt="...">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="${contextPath}/resources/images/animal2.jpg" class="d-block w-50" alt="...">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="${contextPath}/resources/images/animal3.jpg" class="d-block w-50" alt="...">
-                  </div>
-                </div>
-               <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </button>
-            </div>
-        </section>
-   
+           
 
    
    
