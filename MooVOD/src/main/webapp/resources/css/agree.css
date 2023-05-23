@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding:0;
+}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container h1 {
+  text-align: center;
+}
+
+#input {
+	width: 700px;
+	
+}
+.box1,.box2,.box3,.box4 {
+  width:500px;
+  height:120px;
+  overflow:scroll;  
+  border:1px solid black;
+  padding: 0 0.5em;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+span {
+  color:red;
+}
+
+
+/* float 속성 해제 */
+.clearfix{
+	clear: both;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.page_turn {
+  display: flex;
+  justify-content: center;
+}
+
+/* 모두동의 check아이콘 */
+.btn span.glyphicon {         
+  opacity: 0;       
+}
+.btn.active span.glyphicon {        
+  opacity: 1;       
+}
+

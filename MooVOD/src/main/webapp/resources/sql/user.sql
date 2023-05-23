@@ -1,12 +1,18 @@
--- 시퀀스
+-- USER_T 시퀀스
 DROP SEQUENCE USER_SEQ;
 CREATE SEQUENCE USER_SEQ NOCACHE;
 
--- 테이블 삭제 순서는 테이블 생성 순서의 역순이다.
+-- USER_T 테이블
 DROP TABLE USER_ACCESS_T;
 DROP TABLE USER_T;
 
--- 회원
+-- 탈퇴 
+DROP TABLE LEAVE_USER_T;
+
+-- 휴면
+DROP TABLE SLEEP_USER_T;
+
+-- 회원 USER
 CREATE TABLE USER_T (
     USER_NO        NUMBER             NOT NULL,         -- PK
     ID             VARCHAR2(40 BYTE)  NOT NULL UNIQUE,  -- ID 정규식에 반영
@@ -27,13 +33,11 @@ CREATE TABLE USER_T (
     PW_MODIFIED_AT DATE,                                -- 비밀번호변경일
     AUTOLOGIN_ID   VARCHAR2(32 BYTE),                   -- 자동로그인할 때 사용하는 ID(SESSION_ID를 사용함)
     AUTOLOGIN_EXPIRED_AT DATE                           -- 자동로그인 만료일
-    SELLER_CHECK     NUMBER NOT NULL,                     -- 구분(사용자 or 판매자)
 );
 
 ALTER TABLE USER_T
     ADD CONSTRAINT PK_USER
         PRIMARY KEY(USER_NO);
-
 
 -- 회원 접속 기록(회원마다 마지막 로그인 날짜 1개만 기록)
 CREATE TABLE USER_ACCESS_T (
@@ -46,9 +50,7 @@ ALTER TABLE USER_ACCESS_T
         FOREIGN KEY(ID) REFERENCES USER_T(ID)
             ON DELETE CASCADE;
 
-
 -- 탈퇴 (탈퇴한 아이디로 재가입이 불가능)
-DROP TABLE LEAVE_USER_T;
 CREATE TABLE LEAVE_USER_T (
     ID        VARCHAR2(40 BYTE)  NOT NULL UNIQUE,
     EMAIL     VARCHAR2(100 BYTE) NOT NULL UNIQUE,
@@ -56,9 +58,7 @@ CREATE TABLE LEAVE_USER_T (
     LEAVED_AT DATE   -- 탈퇴일
 );
 
-
 -- 휴면 (1년 이상 로그인을 안하면 휴면 처리)
-DROP TABLE SLEEP_USER_T;
 CREATE TABLE SLEEP_USER_T (
     USER_NO        NUMBER             NOT NULL,
     ID             VARCHAR2(40 BYTE)  NOT NULL UNIQUE,  -- ID 정규식에 반영
@@ -80,9 +80,5 @@ CREATE TABLE SLEEP_USER_T (
     SLEPT_AT       DATE                                 -- 휴면일
 );
 
-
-
-
-
-
+-- ID를 이용한 회원 확인, EMAIL DB 업로드
 UPDATE MEMBER SET EMAIL = #{EMAIL} WHERE ID = #{ID}

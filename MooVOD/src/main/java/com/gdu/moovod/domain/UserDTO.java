@@ -29,6 +29,6 @@ public class UserDTO {
   private Date pwModifiedAt;
   private String autologinId;
   private Date autologinExpiredAt;
-  private int sallerCheck; // 사용자구분 -  0:사용자 or 1:판매자
+ // private int sallerCheck; // 사용자구분 -  0:사용자 or 1:판매자
   
 }
