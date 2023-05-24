@@ -163,6 +163,30 @@
       FROM USER_T
      WHERE ID = #{id}
   </delete>
+      
+    <!-- 아이디 찾기 -->
+    <select id="selectFindUserId" parameterType="UserDTO" resultType="UserDTO">
+    SELECT ID, JOINED_AT joinedAt
+      FROM USER_T
+      WHERE NAME = #{name}
+        AND EMAIL = #{email}
+  </select>
+ 
+    <!--유저존재여부찾기 찾기 -->
+   <select id="selectUserPwByUserDTO" parameterType="UserDTO" resultType="String">
+    SELECT COUNT(ID) cntUserYn
+      FROM USER_T
+      WHERE ID = #{id}
+        AND EMAIL = #{email}
+  </select>
+  
+    <!--임시비밀번호 저장 -->
+  <update id="updateUserTempPw" parameterType="UserDTO">
+    UPDATE USER_T
+       SET PW = #{pw}
+      WHERE ID = #{id}
+        AND EMAIL = #{email}
+  </update>
 
   <!-- 휴면처리 1단계 : 1년(12개월) 이상 접속 내역(USER_ACCESS_T의 LAST_LOGIN_AT)이 없는 회원을 휴면 테이블에 저장하기 -->
   <insert id="insertSleepUser">

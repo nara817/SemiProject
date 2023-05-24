@@ -16,14 +16,19 @@
   function fnFindId() {
     $('#btnFindId').on('click', function(){
       $.ajax({
+//        contentType: 'application/json',  // 보내는 데이터가 JSON이라는 의미입니다. 
+//        data: JSON.stringify({            // 보내는 데이터의 파라미터 이름이 없기 때문에 컨트롤러에서 parameter를 받는 request.getParameter(), @RequestParam, 커맨드 객체 모두 사용할 수 없습니다.
+//          name: $('#name').val(),         // 컨트롤러에서는 @RequestBody와 객체 또는 Map을 통해서 받아야 합니다.
+//          email: $('#email').val()
+//        }),
+//        dataType: 'json',
         type: 'post',
         url: '${contextPath}/user/findId.do',
-        contentType: 'application/json',  // 보내는 데이터가 JSON이라는 의미입니다. 
-        data: JSON.stringify({            // 보내는 데이터의 파라미터 이름이 없기 때문에 컨트롤러에서 parameter를 받는 request.getParameter(), @RequestParam, 커맨드 객체 모두 사용할 수 없습니다.
-          name: $('#name').val(),         // 컨트롤러에서는 @RequestBody와 객체 또는 Map을 통해서 받아야 합니다.
+        data: {
+          name: $('#name').val(),
           email: $('#email').val()
-        }),
-        dataType: 'json',
+        },
+          dataType: 'json',
         success: function(resData) {
           if(resData.findUser != null) {
             let id = resData.findUser.id;

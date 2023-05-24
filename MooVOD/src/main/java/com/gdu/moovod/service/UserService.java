@@ -23,10 +23,12 @@ public interface UserService {
   public UserDTO getUserById(String id);
   public int updateMypage(HttpServletRequest request, HttpServletResponse response);
   public int modifyUserInfo(UserDTO userDTO);
-
+  public Map<String, Object> findUser(String name, String email);
+  public void findPw(HttpServletRequest request, HttpServletResponse response);
+  
  //public void modifyPw(UserDTO userDTO);
  //public int updatePwd(int mobile, String password) throws Exception;
- //public Map<String, Object> findUser(UserDTO userDTO);
+
   
   
   

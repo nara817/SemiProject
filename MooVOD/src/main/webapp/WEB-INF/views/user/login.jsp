@@ -12,6 +12,7 @@
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <!-- cdnjs.com 에서 jquery-cookie 검색 후 jquery-cookie 라이브러리 포함 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="${contextPath}/resources/css/login.css"/>
 <script>
 
   // 로그인하기
@@ -60,12 +61,16 @@
   
 </script>
 </head>
-<!-- <body class="text-center"> -->
-<body class="login-container">
+<body class="text-center">
+<div id="login-container">
 
 <div id="loginBox">
   <div class="loginBox_input">
     <div class="loginBoxTitle">Login Page</div>
+    
+    <!-- 로그인 이후 이동할 주소 -->
+    <form id="frmLogin" method="post" action="${contextPath}/user/login.do">
+    
     <input type="text" id="username" placeholder="아이디">
     <input type="password" id="password" placeholder="비밀번호">
     
@@ -83,16 +88,18 @@
         자동 로그인
       </label>
     </div>
+    
+    </form>
     <div class="links">
       <div>
-        <a href="${contextPath}/user/findId.jsp">아이디 찾기</a> | 
-        <a href="${contextPath}/user/findPw.jsp">비밀번호 찾기</a> |
-        <a href="${contextPath}/user/agree.jsp">회원가입</a>
+        <a href="${contextPath}/user/findId.form">아이디 찾기</a> | 
+        <a href="${contextPath}/user/findPw.form">비밀번호 찾기</a> |
+        <a href="${contextPath}/user/agree.form">회원가입</a>
       </div>
     </div>
   </div>
 </div>
+</div>
 
-  <script src="script.js"></script>
 </body>
 </html>
