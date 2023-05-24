@@ -7,10 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gdu.moovod.domain.UserDTO;
-import com.gdu.moovod.mapper.UserMapper;
 import com.gdu.moovod.service.UserService;
-import com.gdu.moovod.util.SecurityUtil;
 
 import lombok.RequiredArgsConstructor;	
 
@@ -80,12 +75,9 @@ public class UserController {
   // 로그인
   @GetMapping("/login.form")
   public String loginForm(@RequestHeader("referer") String url, Model model) {
-    
     // 요청 헤더 referer : 로그인 화면으로 이동하기 직전의 주소를 저장하는 헤더 값
     model.addAttribute("url", url);
-    
     return "user/login";
-    
   }
   
   @PostMapping("/login.do")
@@ -226,9 +218,9 @@ public class UserController {
     params.put("type", "app");
     params.put("userNo", no);
     model.addAttribute("user", userService.get(params));
-  }
+  }*/
 
-  @PostMapping("updatePwd")
+  /*@PostMapping("updatePwd")
   public String updatePwd(UserDTO user, int mobile, String password) throws Exception {
     userService.updatePwd(mobile, password);
     return "redirect:./" + user.getmobile();

@@ -62,34 +62,29 @@
 </script>
 </head>
 <body class="text-center">
-<div id="login-container">
-
-<div id="loginBox">
-  <div class="loginBox_input">
-    <div class="loginBoxTitle">Login Page</div>
+  <div id="login-container">
+    <div id="loginBox">
+      <div class="loginBox_input">
+        <div class="loginBoxTitle">Login Page</div>
+        <form id="frmLogin" method="post" action="${contextPath}/user/login.do">
+          <input type="hidden" name="url" value="${url}">
+          <input type="text" name="id" id="id" placeholder="아이디">
+          <input type="password" name="pw" id="pw" placeholder="비밀번호">
+          <div class="buttons">
+            <button id="login-button">로그인</button>
+            <div class="checkbox-container">
+            </div>
+            <label>
+              <input type="checkbox" id="chkRememberId">
+              아이디 기억
+            </label>
+            <label>
+              <input type="checkbox" id="auto-login">
+              자동 로그인
+            </label>
+          </div>
+        </form>
     
-    <!-- 로그인 이후 이동할 주소 -->
-    <form id="frmLogin" method="post" action="${contextPath}/user/login.do">
-    
-    <input type="text" id="username" placeholder="아이디">
-    <input type="password" id="password" placeholder="비밀번호">
-    
-    <div class="buttons">
-    <button id="login-button">로그인</button>
-    <div class="checkbox-container">
-    </div>
-    
-      <label>
-        <input type="checkbox" id="remember-me">
-        아이디 기억
-      </label>
-      <label>
-        <input type="checkbox" id="auto-login">
-        자동 로그인
-      </label>
-    </div>
-    
-    </form>
     <div class="links">
       <div>
         <a href="${contextPath}/user/findId.form">아이디 찾기</a> | 
@@ -97,6 +92,7 @@
         <a href="${contextPath}/user/agree.form">회원가입</a>
       </div>
     </div>
+    
   </div>
 </div>
 </div>

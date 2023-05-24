@@ -24,7 +24,7 @@
 
       <div>
         <a href="${contextPath}/user/login.form">로그인</a>
-        <a href="${contextPath}/user/modifyPw.form">비밀번호변경</a>
+        <a href="${contextPath}/user/findPw.form">비밀번호변경</a>
       </div>
       
     </form>
