@@ -488,4 +488,54 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 	 
+	 @Override
+	public void modifyPw(HttpServletRequest request, HttpServletResponse response) {
+		 
+		// 요청 파라미터
+		String pw = request.getParameter("pw");
+		String uploadPw = request.getParameter("uploadPw");
+
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("loginId");
+		System.out.println("id:"+id);
+		System.out.println("pw:"+pw);
+		System.out.println("uploadPw:"+uploadPw);
+		pw = securityUtil.getSha256(pw); //암호화처리
+		
+		
+		// UserDTO 만들기
+		UserDTO userDTO = new UserDTO();
+		userDTO.setId(id);
+		userDTO.setPw(pw);
+
+		// DB에서 UserDTO 조회하기
+		String cntUserYn = userMapper.selectUserPwCheck(userDTO);
+		try {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+
+			if("0".equals(cntUserYn)) { //유저가 존재하지 않을 때
+					out.println("<script>");
+					out.println("alert('일치하지 않는 비밀번호 입니다.');");
+					out.println("</script>");
+					out.flush();
+					out.close();			
+			} else { //유저가 존재할 때
+				uploadPw = securityUtil.getSha256(uploadPw); //암호화처리
+				userDTO.setPw(uploadPw);
+				userMapper.updateUserPw(userDTO);
+				
+				out.println("<script>");
+				out.println("alert('비밀번호 변경 완료되었습니다.');");
+				out.println("location.href='" + request.getContextPath() + "/index.do;");
+				out.println("</script>");
+				out.flush();
+				out.close();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	 }
+}

@@ -8,9 +8,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원정보 보기</title>
+<title>MooVOD : 회원정보수정</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
-<link href="${contextPath}/resources/css/modifyForm.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="${contextPath}/resources/css/modifyForm.css"/>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
 
 
@@ -324,13 +327,15 @@ function fnCheckEmail() {
 <title>Insert title here</title>
 </head>
 <body>
-<body>
 
-  <div>
+ <div class="wrapper fadeInDown">
+    <div id="formContent">
   
-    <h1>회원 정보 수정</h1>
+      <div class="loginBox_input">
+         <div class="loginBoxTitle" id="loginBox_input">User Information</div>
   
-    <div>* 표시는 필수 입력사항입니다.</div>
+    <!-- <div class="info"> 수정가능한 회원정보입니다.</div> -->
+    <div class="info"><span class="highlight">일부</span>회원정보만 수정 가능합니다.</div>
     
     <hr>
     
@@ -341,26 +346,18 @@ function fnCheckEmail() {
       <input type="hidden" name="event" value="${event}">
   
       <div>
-        <label for="id">아이디*</label>
+        <label for="id">아이디</label>
         <input type="text" name="id" id="id" value="${user.id}" readonly>
         <span id="msgId"></span>
       </div>
       
-<%--       <div>
-        <label for="pw">비밀번호*</label>
-        <input type="password" name="pw" id="pw" value="${user.pw}" readonly>
-        <!-- <input type="password" name="pw" id="pw"> -->
-        <span id="msgPw"></span>
-      </div> --%>
-     
-      
       <div>
-        <label for="name">이름*</label>
+        <label for="name">이름</label>
         <input type="text" name="name" id="name" value="${user.name}" readonly>
       </div>
       
       <div>
-        <span>성별*</span>
+        <span class="gender-label">성별</span>
         <input type="radio" name="gender" id="none" value="NO" ${user.gender.equals("NO") ? "checked" : ""}>
         <label for="none">선택 안함</label>
         <input type="radio" name="gender" id="male" value="M" ${user.gender.equals("M") ? "checked" : ""}>
@@ -370,13 +367,13 @@ function fnCheckEmail() {
       </div>
     
       <div>
-        <label for="mobile">휴대전화*</label>
+        <label for="mobile" class="mobile-label">휴대전화</label>
         <input type="text" name="mobile" id="mobile" value="${user.mobile}" >
         <span id="msgMobile"></span>
       </div>
     
       <div>
-        <label for="birthyear">생년월일*</label>
+        <label for="birthyear" class="birthyear">생년월일</label>
         <select name="birthyear" id="birthyear"></select>
         <select name="birthmonth" id="birthmonth" ></select>
         <select name="birthdate" id="birthdate" ></select>
@@ -384,7 +381,7 @@ function fnCheckEmail() {
       
       <div>
         <input type="text" onclick="execDaumPostcode()" name="postcode" id="postcode" placeholder="우편번호" value="${user.postcode}" readonly="readonly">
-        <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+        <input type="button" onclick="execDaumPostcode()" class="postcode-button" value="우편번호 찾기"><br>
         <input type="text" name="roadAddress" id="roadAddress" placeholder="도로명주소" value="${user.roadAddress}">
         <input type="text" name="jibunAddress" id="jibunAddress" placeholder="지번주소" value="${user.jibunAddress}"><br>
         <span id="guide" style="color:#999;display:none"></span>
@@ -447,27 +444,44 @@ function fnCheckEmail() {
                     }
                 }).open();
             }
+            
+          // 동의 약관
+          if('${loginUser.agreecode}' == '1' || '${loginUser.agreecode}' == '3'){
+            $(':radio[name="location"][value="on"]').prop('checked', true);       
+          } else {
+            $(':radio[name="location"][value="off"]').prop('checked', true);
+          }
+          if('${loginUser.agreecode}' == '2' || '${loginUser.agreecode}' == '3'){
+            $(':radio[name="event"][value="on"]').prop('checked', true);        
+          } else {
+            $(':radio[name="event"][value="off"]').prop('checked', true);
+          }
+            
         </script>
       </div>
       
       <div class="inputbox_email">
-        <label for="email">이메일*</label>
+        <label for="email" class="email-label">이메일</label>
         <input type="text" name="email" id="email" value="${user.email}">
         <span id="msgEmail"></span><br>
       </div>
       
+      
+      
       <hr>
       
-      <div class="btnbox">
+      <div class="buttons" id="buttons">
         <button class="btn-hover color-11">수정하기</button>
-        <input type="button" value="취소하기">
+      </div>
+               
+      <div class="buttons" id="buttons">
+        <input type="reset" id="buttons" value="취소하기">
       </div>
     
     </form>
-  
+    </div>
   </div>
+</div>
 
-    <script>
-    </script>
 </body>
 </html>

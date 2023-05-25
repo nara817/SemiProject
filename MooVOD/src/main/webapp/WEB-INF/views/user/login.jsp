@@ -4,15 +4,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%-- <jsp:include page="${contextPath}layout/header.jsp"></jsp:include>
+<jsp:include page="${contextPath}layout/footer.jsp"></jsp:include> --%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MooVOD : 로그인</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
-<!-- cdnjs.com 에서 jquery-cookie 검색 후 jquery-cookie 라이브러리 포함 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="stylesheet" href="${contextPath}/resources/css/login.css"/>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
 
   // 로그인하기
@@ -61,19 +65,25 @@
   
 </script>
 </head>
-<body class="text-center">
-  <div id="login-container">
-    <div id="loginBox">
+<body>
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+    
       <div class="loginBox_input">
-        <div class="loginBoxTitle">Login Page</div>
-        <form id="frmLogin" method="post" action="${contextPath}/user/login.do">
+         <div class="loginBoxTitle" id="loginBox_input">Login Page</div>
+
+         
+         <form id="frmLogin" method="post" action="${contextPath}/user/login.do">
+         
           <input type="hidden" name="url" value="${url}">
-          <input type="text" name="id" id="id" placeholder="아이디">
-          <input type="password" name="pw" id="pw" placeholder="비밀번호">
-          <div class="buttons">
-            <button id="login-button">로그인</button>
-            <div class="checkbox-container">
+          
+          <input type="text" name="id" id="id" class="fadeIn second" placeholder="아이디">
+          <input type="password" name="pw" id="pw" class="fadeIn third" placeholder="비밀번호">
+     
+            <div class="buttons">
+              <button id="login-button" class="fadeIn fourth">로그인</button>
             </div>
+            
             <label>
               <input type="checkbox" id="chkRememberId">
               아이디 기억
@@ -82,20 +92,18 @@
               <input type="checkbox" id="auto-login">
               자동 로그인
             </label>
-          </div>
-        </form>
-    
-    <div class="links">
-      <div>
-        <a href="${contextPath}/user/findId.form">아이디 찾기</a> | 
-        <a href="${contextPath}/user/findPw.form">비밀번호 찾기</a> |
-        <a href="${contextPath}/user/agree.form">회원가입</a>
+          </form>
+
+  <div id="formFooter">
+    <a class="underlineHover" href="${contextPath}/user/findId.form">아이디 찾기</a> | 
+    <a class="underlineHover" href="${contextPath}/user/findPw.form">비밀번호 찾기</a> |
+    <a class="underlineHover" href="${contextPath}/user/agree.form">회원가입</a>
+   </div>
+   
       </div>
+      
     </div>
-    
   </div>
-</div>
-</div>
 
 </body>
 </html>

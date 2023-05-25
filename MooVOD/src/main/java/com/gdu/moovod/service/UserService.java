@@ -25,6 +25,8 @@ public interface UserService {
   public int modifyUserInfo(UserDTO userDTO);
   public Map<String, Object> findUser(String name, String email);
   public void findPw(HttpServletRequest request, HttpServletResponse response);
+  public void modifyPw(HttpServletRequest request, HttpServletResponse response);
+ // public UserDTO verifyTemporaryPassword(String id, String temporaryPassword);
   
  //public void modifyPw(UserDTO userDTO);
  //public int updatePwd(int mobile, String password) throws Exception;

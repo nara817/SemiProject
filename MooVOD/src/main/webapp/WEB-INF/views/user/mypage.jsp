@@ -8,8 +8,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MooVOD : 마이페이지</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="${contextPath}/resources/css/mypage.css"/>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
 
 
@@ -314,25 +318,31 @@
     fnCheckEmail();
     fnJoin();
   })
-
+  
+  // 9. 비밀번호 변경 알림창
+    function showAlert() {
+      alert('비밀번호변경을 원하시는 경우, 고객센터를 통해 문의 부탁드립니다.');
+    }
 </script>
+
 </head>
 <body>
-
-  <div>
-    <h1>마이페이지</h1>
-    <hr>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    
+      <div class="loginBox_input">
+         <div class="loginBoxTitle" id="loginBox_input">My Page</div>
   
   </div>
       
-      <div>
-        <button>개인정보수정완료</button>
+      <div class="buttons" id="buttons">
         <button type="button" onclick="location.href='modifyInfo.form' ">회원정보수정</button>
+        </div>
+      <div class="buttons" id="buttons">
+        <button type="button" onclick="location.href='modifyPw.form' " >비밀번호변경</button>
+<!--         <button type="button" onclick="showAlert()" >비밀번호변경</button> -->
       </div>
-    
-    </form>
-  
-  </div>
-  
+  </div> 
+</div>  
 </body>
 </html>

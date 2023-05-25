@@ -183,12 +183,6 @@ public class UserController {
     return "user/findPw";
   }
   
-  /* 비밀번호 찾기
-	@PostMapping(value="/findPw.do", produces="application/json")
-	public Map<String, Object> findPw(@RequestParam("id") String id, @RequestParam("email") String email) {
-	  return userService.findPw(id, email);
-  }*/
-  
 	// 비밀번호 찾기
 	@PostMapping("/findPw.do")
 	 public void findPw(HttpServletRequest request, HttpServletResponse response) { 
@@ -211,6 +205,17 @@ public class UserController {
 	    return "user/sendTemporaryPassword";
 	  }
 
+	   // 비밀번호  변경
+	  @GetMapping("/modifyPw.form")  // 비밀번호  변경 화면으로 이동
+	  public String modifyPwForm() {
+	    return "user/modifyPw";
+	  }
+	  
+	  // 비밀번호  변경
+	  @PostMapping("/modifyPw.do")  // 비밀번호  변경 화면으로 이동
+	  public void modifyPw(HttpServletRequest request, HttpServletResponse response) {
+		  userService.modifyPw(request, response);
+	  }
   /* 비밀번호 변경
   @GetMapping("updatePwdForm")
   public void updatePwdForm(int no, Model model) throws Exception {
@@ -220,6 +225,8 @@ public class UserController {
     model.addAttribute("user", userService.get(params));
   }*/
 
+	// 비밀번호 변경
+	
   /*@PostMapping("updatePwd")
   public String updatePwd(UserDTO user, int mobile, String password) throws Exception {
     userService.updatePwd(mobile, password);

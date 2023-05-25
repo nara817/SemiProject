@@ -187,6 +187,21 @@
       WHERE ID = #{id}
         AND EMAIL = #{email}
   </update>
+  
+    <!-- 비밀번호 재설정을 위한 pw확인 -->
+  <select id="selectUserPwCheck" parameterType="UserDTO" resultType="String">
+    SELECT COUNT(ID) cntUserYn
+      FROM USER_T
+      WHERE ID = #{id}
+        AND PW = #{pw}
+  </select>
+  
+  <!-- 비밀번호 재설정 -->
+   <update id="updateUserPw" parameterType="UserDTO">
+    UPDATE USER_T
+       SET PW = #{pw}
+      WHERE ID = #{id}
+ </update>
 
   <!-- 휴면처리 1단계 : 1년(12개월) 이상 접속 내역(USER_ACCESS_T의 LAST_LOGIN_AT)이 없는 회원을 휴면 테이블에 저장하기 -->
   <insert id="insertSleepUser">

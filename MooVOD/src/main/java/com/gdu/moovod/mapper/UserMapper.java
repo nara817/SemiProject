@@ -31,6 +31,8 @@ public interface UserMapper {
 	  public UserDTO selectFindUserId(UserDTO userDTO);
 	  public String selectUserPwByUserDTO(UserDTO userDTO);
 	  public int updateUserTempPw(UserDTO userDTO);
+	  public String selectUserPwCheck(UserDTO userDTO);
+	  public int updateUserPw(UserDTO userDTO);
 	  
   
   
