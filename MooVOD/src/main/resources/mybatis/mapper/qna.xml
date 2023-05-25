@@ -4,8 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace는 @Mapper를 지정한다. -->
-<mapper namespace="com.gdu.moovod.mapper.UserMapper">
+<mapper namespace="com.gdu.moovod.mapper.QnaMapper">
 
-	
-	
 </mapper>
