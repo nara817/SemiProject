@@ -6,11 +6,6 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.moovod.mapper.UserMapper">
 
-<<<<<<< HEAD
-	
-	
-</mapper>
-=======
   <select id="selectUserById" parameterType="String" resultType="UserDTO">
     SELECT USER_NO
          , ID
@@ -326,4 +321,3 @@
 
 </mapper>
   
->>>>>>> kim
