@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding:0;
+}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container h1 {
+  text-align: center;
+}
+
+#input {
+	width: 700px;
+	
+}
+.box1,.box2,.box3,.box4 {
+  width:500px;
+  height:120px;
+  overflow:scroll;  
+  border:1px solid black;
+  padding: 0 0.5em;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+span {
+  color:red;
+}
+
+
+/* float 속성 해제 */
+.clearfix{
+	clear: both;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.formFooter{
+  display: flex;
+  justify-content: center;
+}
+
+/* 모두동의 check아이콘 */
+.btn span.glyphicon {         
+  opacity: 0;       
+}
+.btn.active span.glyphicon {        
+  opacity: 1;       
+}
+
+#loginBox_input {
+  color:#000000;
+  font-weight: bold;
+  font-size: 32px;
+  text-align: center;
+  
+  /*모두 대문자로 변경 */
+  text-transform: uppercase;
+  
+  padding: 5px;
+  
+  /* 텍스트에 그라데이션 효과주기 */
+  background: linear-gradient(to right, #270a09, #8ca6ce);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+}
+
