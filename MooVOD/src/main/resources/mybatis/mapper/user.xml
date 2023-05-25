@@ -308,7 +308,7 @@
   </delete>
 
   <!-- 회원정보 수정 -->
-	<update id="modifyUserInfo" parameterType="UserDTO">
+  <update id="modifyUserInfo" parameterType="UserDTO">
     UPDATE USER_T
        SET NAME = #{name}
         , GENDER = #{gender}

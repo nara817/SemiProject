@@ -13,7 +13,7 @@
 <script>
 
 //   $(function(){
-// 	  fn_findPw();
+//    fn_findPw();
 //   })
   $(document).ready(function(){
     fn_findPw2();
@@ -21,9 +21,9 @@
 
   function fn_findPw2(){
 
-	    $('#frmFindPw').on('submit', function(event){
-	    	
-	    });
+      $('#frmFindPw').on('submit', function(event){
+        
+      });
   }
   
 //리턴받아서 사용할경우
@@ -39,12 +39,12 @@
 //           type: 'post',
 //           url: '${contextPath}/user/findPw.do',
 //            data: {
-//         	   id: $('#id').val(),
+//             id: $('#id').val(),
 //                email: $('#email').val()
 //              },
 //             dataType: 'json',
 //           success: function(resData) {
-//         	  alert("resDat"+resData);
+//            alert("resDat"+resData);
 //           }
 //         });
 //       });

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.moovod.mapper.VodMapper">
+
+  <!-- page를 위한 전체 리스트 카운트 -->
+  <select id="vodCount" resultType="int">
+    SELECT COUNT(*)
+      FROM VOD
+  </select>
+
+ <!--
+  <select id="getVodListUsingScroll" parameterType="Map" resultType="VodDTO">
+    SELECT A.RN, A.VOD_NO, A.VOD_TITLE, A.VOD_PRICE, A.VOD_PHOTO, A.VOD_CATEGORY, A.VOD_STAR
+     FROM (SELECT ROW_NUMBER() OVER(ORDER BY VOD_NO ASC) AS RN, VOD_NO, VOD_TITLE, VOD_PRICE, VOD_PHOTO, VOD_CATEGORY, VOD_STAR
+       FROM VOD) A
+     WHERE A.RN BETWEEN #{begin} AND #{end}
+  </select> -->
+
+  <!-- vod 전체 리스트 -->
+	<select id="vodList" resultType="VodDTO">
+	  SELECT VOD_NO, VOD_TITLE, VOD_PRICE, VOD_PHOTO, VOD_CATEGORY, VOD_STAR
+	  FROM VOD
+	</select>
+	
+	<!-- vod 상세보기 -->
+	<select id="vodGetByNo" parameterType="int" resultType="VodDTO">
+	 SELECT VOD_NO, VOD_STAR, VOD_TITLE, VOD_CONTENT, VOD_DATE, VOD_PRICE, VOD_ACTOR, VOD_DIRECTOR, VOD_CATEGORY, VOD_COMPANY, VOD_PHOTO, VOD_YOUTUBE, VOD_SHOT
+	   FROM VOD
+	  WHERE VOD_NO = #{vodNo}
+	</select>
+	
+	<!-- 결제 완료 구매내역 저장 -->
+	<insert id="vodOrderDone" parameterType="VodPurchaseDTO">
+	 INSERT INTO VOD_PURCHASE
+	       VALUES(VOD_PURCHASE_SEQ.NEXTVAL, #{id}, #{vodNo}, SYSDATE, #{purchaseSale}, #{purchaseLastPrice})
+	</insert>
+	
+	<!-- 로그인 한 아이디 구매내역 불러오기 -->
+	<select id="vodPurchaseList" parameterType="String" resultType="VodPurchaseDTO">
+	  SELECT vp.PURCHASE_NO, vp.ID, v.VOD_TITLE, v.VOD_YOUTUBE, vp.PURCHASE_DATE, vp.PURCHASE_SALE, vp.PURCHASE_LAST_PRICE
+	    FROM VOD_PURCHASE vp
+	    JOIN VOD v ON vp.VOD_NO = v.VOD_NO
+	   WHERE vp.ID = #{id}
+	</select>
+	
+	
+	<!-- 유저가 보유한 쿠폰 리스트 조인을 통해 쿠폰 리스트 값 조회 해서 가져와야함.   -->
+	<select id="userCouponList" parameterType="String" resultType="VodUserCouponListDTO">
+	 SELECT USER_COUPON_NO, COUPON_NAME, ID, COUPON_USE
+	   FROM VOD_USER_COUPON
+	  WHERE ID = #{id} AND COUPON_USE = 0
+	</select>
+	
+	<!-- 유저가 보유한 쿠폰 사용 시 쿠폰에 대한 할인 값 가져오기 -->
+	<select id="couponUse" parameterType="String" resultType="java.lang.Double">
+	 SELECT COUPON_SALE
+	   FROM VOD_COUPON_LIST
+	  WHERE COUPON_NAME = #{couponName}
+	</select>
+	
+	<!-- 유저가 보유한 쿠폰 사용 완료 시 쿠폰 사용 여부 0 -> 1로 바꾸기 -->
+	<update id="couponUsed" parameterType="VodUserCouponListDTO">
+	UPDATE USER_COUPONLIST
+	   SET COUPON_USE = 1
+	 WHERE COUPON_NAME = #{couponName} AND ID = #{id}
+	</update>
+	
+	<!-- 유저가 찜 누를 경우 저장 -->
+	<insert id="zzimAdd" parameterType="VodZzimDTO">
+	 INSERT INTO VOD_ZZIM
+	   VALUES(VOD_ZZIM_SEQ.NEXTVAL, #{vodNo}, #{id})
+	</insert>
+	
+	<!-- 유저 찜 마이페이지 -->
+	<select id="myZzim" parameterType="String" resultType="VodZzimDTO">
+    SELECT Z.ID, V.VOD_TITLE, Z.VOD_NO
+      FROM VOD_ZZIM Z
+      JOIN VOD V ON V.VOD_NO = Z.VOD_NO
+     WHERE Z.ID = #{id}
+	</select>
+</mapper>
