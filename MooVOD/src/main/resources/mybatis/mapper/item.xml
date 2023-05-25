@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.moovod.mapper.ItemMapper">
+	
+	<select id="getItemList" resultType="ItemDTO">
+		SELECT ITEM_ID, ITEM_NAME, ITEM_PRICE, ITEM_INFO, ITEM_IMG
+		  FROM ITEM
+		 ORDER BY ITEM_ID
+	</select>
+
+	<select id="getItemByNo"  resultType="ItemDTO">
+		SELECT ITEM_ID, ITEM_NAME, ITEM_PRICE, ITEM_INFO, ITEM_IMG
+		  FROM ITEM
+		 WHERE ITEM_ID = #{itemId}
+	</select>
+	
+	
+	
+</mapper>

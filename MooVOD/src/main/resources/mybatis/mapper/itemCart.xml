@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.moovod.mapper.ItemCartMapper">
+	
+	<select id="getItemCartList" resultType="ItemCartDTO">
+		SELECT CART_ID, ID, ITEM_ID, AMOUNT, ITEM_PRICE
+		  FROM ITEM_CART
+		 WHERE ID = #{ID}
+	</select>
+	
+	<!-- <select id="getItemCartById" parameterType="int" resultType="ItemCartDTO">
+		SELECT C.CART_ID, C.ID, C.ITEM_ID, C.AMOUNT, I.ITEM_NAME, I.ITEM_PRICE
+		  FROM ITEM_CART C LEFT OUTER JOIN ITEM I
+		    ON C.ITEM_ID = I.ITEM_ID
+		 WHERE ID = #{id}
+	</select> -->
+
+ 	<insert id="insertItemCart" parameterType="ItemCartDTO">
+		INSERT INTO ITEM_CART(
+				  CART_ID
+			  , ITEM_ID
+			  , AMOUNT
+			  , ITEM_PRICE
+			 ) VALUES (
+			 	  CART_ID_SEQ.NEXTVAL
+			  , #{itemId}
+			  , #{amount}
+			  , #{itemPrice})
+	</insert>
+	
+    <update id="updateItemCart" parameterType="ItemCartDTO">
+		UPDATE ITEM_CART
+		   SET AMOUNT = #{amount}
+		 WHERE CART_ID = #{cartId}
+	</update>
+	
+	<delete id="deleteItemCart" parameterType="int">
+		DELETE
+		  FROM ITEM_CART
+		 WHERE CART_ID = #{cartId}
+	</delete>
+	
+	<delete id="deleteItemCartList" parameterType="list">
+		DELETE 
+		  FROM ITEM_CART
+		 WHERE USER_ID = #{userID}
+		<where>
+			<foreach collection="list" item="cartId" open="CART_ID IN(" separator="," close=")">
+				#{cartId}
+			</foreach>
+		</where>
+	</delete>
+</mapper>
+	
+	

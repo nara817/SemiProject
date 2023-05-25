@@ -20,12 +20,12 @@
 
   // 취소하면 이전 페이지로 돌아간다.
   function fnCancel(){
-	  $('#btnCancel').on('click', function(){		  
+    $('#btnCancel').on('click', function(){     
       history.back();
-	  })
+    })
   }
   
-	    // 전체 선택 체크박스 클릭 시
+      // 전체 선택 체크박스 클릭 시
     $(document).ready(function() {
       // 전체 선택 체크박스 클릭 시
       $("#checkAll").click(function() {
@@ -44,20 +44,20 @@
   
   // 가입 페이지로 이동하기(frmAgree의 submit)
   function fnFrmAgreeSubmit(){
-	  $('#frmAgree').on('submit', function(event){
-		  if( $('#service').is(':checked') == false || $('#privacy').is(':checked') == false ){
-			  alert('필수 약관에 동의해야만 가입할 수 있습니다.');
-			  event.preventDefault();
-			  return;
-		  }
-	  })
+    $('#frmAgree').on('submit', function(event){
+      if( $('#service').is(':checked') == false || $('#privacy').is(':checked') == false ){
+        alert('필수 약관에 동의해야만 가입할 수 있습니다.');
+        event.preventDefault();
+        return;
+      }
+    })
   }
   
   // 함수 호출
   $(function(){
-	  fnCancel();
-	  fnCheckAll();
-	  fnCheckOne();
+    fnCancel();
+    fnCheckAll();
+    fnCheckOne();
     fnFrmAgreeSubmit();
   })
   
