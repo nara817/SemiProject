@@ -12,19 +12,6 @@
   <!-- Application Loggers : com.gdu 패키지는 DEBUG 수준의 로그 레벨을 가진다. -->
   <logger name="com.gdu"             level="DEBUG" />
 
-  <!-- Console 화면에 로그를 찍는 console Appender -->
-  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>
-        [%date{HH:mm:ss.SSS, Asia/Seoul}][%-5level][%logger] - %msg%n
-      </pattern>
-    </encoder>
-  </appender>
-  
-  <!-- Application Loggers : com.gdu 패키지는 DEBUG 수준의 로그 레벨을 가진다. -->
-  <logger name="com.gdu" level="DEBUG" />
-  
-  
   <!-- 3rdparty Loggers : 외부 라이브러리는 INFO 수준의 로그 레벨을 가진다. -->
   <logger name="org.springframework" level="INFO" />
   <logger name="org.apache.ibatis"   level="INFO" />

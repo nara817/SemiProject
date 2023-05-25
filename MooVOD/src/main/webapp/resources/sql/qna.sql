@@ -1,0 +1,178 @@
+-- 테이블 삭제
+DROP TABLE QCOMMENT;
+DROP TABLE SUMMERNOTE_NIMAGE;
+DROP TABLE SUMMERNOTE_QIMAGE;
+DROP TABLE NOTICE;
+DROP TABLE FAQ;
+DROP TABLE QNA;
+
+-- 테이블
+-- 테이블
+CREATE TABLE SUMMERNOTE_QIMAGE (
+    FILESYSTEM_NAME VARCHAR2(50 BYTE),
+    QNA_NO         NUMBER  -- FK (QNA TABLE)                    
+);
+
+CREATE TABLE SUMMERNOTE_NIMAGE (
+    FILESYSTEM_NAME VARCHAR2(50 BYTE),
+    NOTICE_NO         NUMBER  -- FK (NOTICE TABLE)                                  
+);
+
+CREATE TABLE QNA ( -- 업로드O -- 비밀글 칼럼넣어야하는데.. 어떻게해야하는지 모르겠어요
+    QNA_NO          NUMBER NOT NULL,
+    CATEGORY        VARCHAR2(30   BYTE) NOT NULL,
+    TITLE           VARCHAR2(300 BYTE) NOT NULL,
+    CONTENT         CLOB,
+    CREATED_AT      TIMESTAMP,
+    MODIFIED_AT     TIMESTAMP,               
+    HIT             NUMBER NOT NULL,
+    SECRET          NUMBER(1) NOT NULL,
+    ID              VARCHAR2(40 BYTE)  -- 나라테이블 회원정보 -- FK (USER TABLE)      
+    
+);
+
+CREATE TABLE NOTICE ( --업로드O
+    NOTICE_NO     NUMBER NOT NULL, 
+    CATEGORY      VARCHAR2(30    BYTE) NOT NULL, 
+    TITLE         VARCHAR2(1000  BYTE) NOT NULL, 
+    CONTENT       CLOB, 
+    CREATED_AT    TIMESTAMP,                    
+    MODIFIED_AT   TIMESTAMP,
+    HIT           NUMBER NOT NULL,
+    ID             VARCHAR2(40 BYTE)  -- FK (USER TABLE) 
+    
+);
+
+CREATE TABLE FAQ ( 
+    FAQ_NO        NUMBER NOT NULL, 
+    CATEGORY      VARCHAR2(30    BYTE) NOT NULL,
+    TITLE         VARCHAR2(1000  BYTE) NOT NULL, 
+    CONTENT       CLOB, 
+    CREATED_AT    TIMESTAMP,                    
+    MODIFIED_AT   TIMESTAMP,
+    HIT           NUMBER NOT NULL,
+    ID            VARCHAR2(40 BYTE)  -- FK (USER) 
+);
+
+CREATE TABLE QCOMMENT (
+    QCOMMENT_NO NUMBER NOT NULL,
+    CONTENT    VARCHAR2(4000 BYTE) NOT NULL,
+    STATE      NUMBER,    -- 정상 1, 삭제 -1
+    DEPTH      NUMBER,    -- 댓글 0, 댓글에 달린 댓글 1
+    GROUP_NO   NUMBER,    -- 댓글과 댓글에 달린 댓글은 같은 그룹
+    CREATED_AT DATE,
+    QNA_NO     NUMBER,    -- FK (QNA TABLE) 
+    ID             VARCHAR2(40 BYTE)     -- FK (USER TABLE) 
+);
+
+
+-- 기본키
+ALTER TABLE QNA
+    ADD CONSTRAINT PK_QNA
+           PRIMARY KEY(QNA_NO);
+
+ALTER TABLE FAQ
+    ADD CONSTRAINT PK_FAQ
+           PRIMARY KEY(FAQ_NO);
+
+ALTER TABLE NOTICE
+    ADD CONSTRAINT PK_NOTICE
+           PRIMARY KEY(NOTICE_NO);
+           
+ALTER TABLE QCOMMENT
+    ADD CONSTRAINT PK_QCOMMENT
+           PRIMARY KEY(QCOMMENT_NO);
+           
+-- 외래키
+ALTER TABLE SUMMERNOTE_QIMAGE
+    ADD CONSTRAINT FK_SUMMERNOTE_QIMAGE_QNA
+           FOREIGN KEY(QNA_NO) REFERENCES QNA(QNA_NO)
+                ON DELETE CASCADE;
+            
+ALTER TABLE SUMMERNOTE_NIMAGE
+    ADD CONSTRAINT FK_SUMMERNOTE_NIMAGE_NOTICE
+           FOREIGN KEY(NOTICE_NO) REFERENCES NOTICE(NOTICE_NO)
+                ON DELETE CASCADE;
+
+ALTER TABLE QNA
+    ADD CONSTRAINT FK_QNA_USER_T
+        FOREIGN KEY (ID) REFERENCES USER_T(ID)
+             ON DELETE CASCADE;
+            
+ALTER TABLE NOTICE
+    ADD CONSTRAINT FK_NOTICE_USER_T
+        FOREIGN KEY (ID) REFERENCES USER_T(ID)
+             ON DELETE CASCADE;
+
+            
+ALTER TABLE FAQ
+    ADD CONSTRAINT FK_FAQ_USER_T
+        FOREIGN KEY (ID) REFERENCES USER_T(ID)
+             ON DELETE CASCADE;
+            
+-- 시퀀스
+DROP SEQUENCE QNA_SEQ;
+DROP SEQUENCE FAQ_SEQ;
+DROP SEQUENCE NOTICE_SEQ;
+DROP SEQUENCE QCOMMENT_SEQ;
+
+CREATE SEQUENCE QNA_SEQ NOCACHE;
+CREATE SEQUENCE FAQ_SEQ NOCACHE;
+CREATE SEQUENCE NOTICE_SEQ NOCACHE;
+CREATE SEQUENCE QCOMMENT_SEQ NOCACHE;
+
+
+-- 데이터
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '결제문의', '[현금영수증] 발행 관련', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '결제문의', '[신용카드] 할부 관련', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '할인문의', '[스토어 쿠폰] 사용 방법 안내', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '할인문의', '[스토어 쿠폰] 유효기간 안내', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '환불문의', '[VOD 구매] 환불 규정 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '환불문의', '[VOD 구매] 환불 규정 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '스토어샵', '[상품 구매] 교환 및 반품 안내', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'STORE매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '스토어샵', '[상품 구매] 적립 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'STORE매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '결제문의', '[현금영수증] 발행 관련', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '결제문의', '[신용카드] 할부 관련', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '할인문의', '[스토어 쿠폰] 사용 방법 안내', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '할인문의', '[스토어 쿠폰] 유효기간 안내', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '환불문의', '[VOD 구매] 환불 규정 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '환불문의', '[VOD 구매] 환불 규정 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '스토어샵', '[상품 구매] 교환 및 반품 안내', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'STORE매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '스토어샵', '[상품 구매] 적립 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'STORE매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '결제문의', '[현금영수증] 발행 관련', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '결제문의', '[신용카드] 할부 관련', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '할인문의', '[스토어 쿠폰] 사용 방법 안내', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '할인문의', '[스토어 쿠폰] 유효기간 안내', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '환불문의', '[VOD 구매] 환불 규정 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '환불문의', '[VOD 구매] 환불 규정 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '스토어샵', '[상품 구매] 교환 및 반품 안내', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'STORE매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '스토어샵', '[상품 구매] 적립 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'STORE매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '결제문의', '[현금영수증] 발행 관련', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '결제문의', '[신용카드] 할부 관련', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '할인문의', '[스토어 쿠폰] 사용 방법 안내', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '할인문의', '[스토어 쿠폰] 유효기간 안내', '내용내용내용', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '환불문의', '[VOD 구매] 환불 규정 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '환불문의', '[VOD 구매] 환불 규정 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'CS매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '스토어샵', '[상품 구매] 교환 및 반품 안내', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'STORE매니저');
+INSERT INTO FAQ VALUES(FAQ_SEQ.NEXTVAL, '스토어샵', '[상품 구매] 적립 안내 ', '내용내용내용 ', SYSDATE, SYSDATE, 0, 'STORE매니저');
+
+
+COMMIT;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

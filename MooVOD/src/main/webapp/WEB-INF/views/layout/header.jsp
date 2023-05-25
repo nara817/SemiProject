@@ -33,14 +33,6 @@
     <script src="${contextPath}/resources/menubar/menubar.min.js"></script>
     <script src="${contextPath}/resources/summernote-0.8.18-dist/summernote-lite.min.js"></script>
     <script src="${contextPath}/resources/summernote-0.8.18-dist/lang/summernote-ko-KR.min.js"></script>
-    <script>
-      function fnLeave(){
-        if(confirm('동일한 아이디로 재가입이 불가능합니다. 회원 탈퇴하시겠습니까?')){
-          location.href = '${contextPath}/user/leave.do';
-        }
-      }
-  </script>
-
 <style>
 nav {
 text-align: center;
@@ -133,17 +125,8 @@ display: flex;
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <c:if test="${sessionScope.loginId == null}">   
-                          <li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/user/login.form">로그인</a></li>
-                          <li class="nav-item"><a class="nav-link" href="${contextPath}/user/agree.form">회원가입</a></li>
-                        </c:if>
-                        
-                        <c:if test="${sessionScope.loginId != null}">
-                        <li class="nav-item"><a class="nav-link" href="${contextPath}/user/checkPw.form">${sessionScope.loginId}님</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${contextPath}/user/logout.do">로그아웃</a></li>
-                        <li class="nav-item"><a class="nav-link" href="javascript:fnLeave()">회원탈퇴</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${contextPath}/user/mypage.do">마이페이지</a></li>
-                        </c:if>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/user/login.form">로그인</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${contextPath}/user/agree.form">회원가입</a></li>
                         <li class="nav-item"><a class="nav-link" href="${contextPath}/main">고객센터</a></li>
                     </ul>
                

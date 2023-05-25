@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.moovod.mapper.FaqMapper">
+   
+
+  <select id="getAllMovies" resultType="FaqDTO">
+    SELECT FAQ_NO, CATEGORY, TITLE, CONTENT, CREATED_AT, MODIFIED_AT, HIT, ID
+      FROM FAQ 
+     ORDER BY FAQ_NO DESC
+  </select> 
+  
+  <select id="getMoviesByQuery" parameterType="FQueryDTO" resultType="FaqDTO">
+    SELECT FAQ_NO, CATEGORY, TITLE, CONTENT, CREATED_AT, MODIFIED_AT, HIT, ID
+      FROM FAQ
+     WHERE ${column} LIKE '%' || #{searchText} || '%'
+  </select> 
+
+
+
+  <select id="selectFaqList" resultType="FaqDTO">
+    SELECT FAQ_NO, CATEGORY, TITLE, CONTENT, CREATED_AT, MODIFIED_AT, HIT, ID
+      FROM FAQ
+     ORDER BY FAQ_NO DESC
+  </select>
+  
+  <select id="selectFaqByNo" parameterType="int" resultType="FaqDTO">
+    SELECT FAQ_NO, CATEGORY, TITLE, CONTENT, CREATED_AT, MODIFIED_AT, HIT, ID
+      FROM FAQ
+     WHERE FAQ_NO = #{faqNo}
+  </select>
+
+  <insert id="insertFaq" parameterType="FaqDTO">
+    INSERT INTO FAQ(
+        FAQ_NO
+      , CATEGORY
+      , TITLE
+      , CONTENT
+      , CREATED_AT
+      , MODIFIED_AT
+      , HIT
+      , ID
+    ) VALUES (
+        FAQ_SEQ.NEXTVAL
+      , #{category}
+      , #{title}
+      , #{content}
+      , TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+      , TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+      , 0
+      , ?
+    )
+  </insert>
+
+  <update id="updateFaq" parameterType="FaqDTO">
+    UPDATE FAQ
+       SET TITLE = #{title}
+         , CONTENT = #{content}
+         , MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+     WHERE FAQ_NO = #{faqNo}
+  </update>
+  
+  <delete id="deleteFaq" parameterType="int">
+    DELETE
+      FROM FAQ
+     WHERE FAQ_NO = #{faqNo}
+  </delete>
+  
+  <!-- arrayList가 전달되는거다 -->
+  <delete id="deleteFaqList" parameterType="List">
+    DELETE
+      FROM FAQ
+    <where>
+      <foreach collection="list" item="faqNo" open="Faq_NO IN(" separator="," close=")">
+        #{faqNo}
+      </foreach>
+    </where>
+  </delete>
+  
+  <!-- 셀렉트를 써서. 지금 게시글이 몇개다 나타내기 -->
+  <select id="selectFaqCount" resultType="int">
+    SELECT COUNT(*)
+      FROM FAQ
+  </select>
+  
+
+
+	
+</mapper>
