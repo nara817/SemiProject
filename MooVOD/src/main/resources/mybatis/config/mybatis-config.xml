@@ -12,10 +12,27 @@
 
 	<!-- typeAliases -->
 	<typeAliases>
+	  <!-- yu -->
+		<typeAlias alias="VodDTO" type="com.gdu.moovod.domain.VodDTO"/>
+    <typeAlias alias="VodPurchaseDTO" type="com.gdu.moovod.domain.VodPurchaseDTO"/>   
+    <typeAlias alias="VodUserCouponListDTO" type="com.gdu.moovod.domain.VodUserCouponListDTO"/>   
+    <typeAlias alias="VodCouponDTO" type="com.gdu.moovod.domain.VodCouponDTO"/>   
+    <typeAlias alias="VodZzimDTO" type="com.gdu.moovod.domain.VodZzimDTO"/>
+	  <!-- kim -->
 		<typeAlias alias="UserDTO"       type="com.gdu.moovod.domain.UserDTO" />
 		<typeAlias alias="SleepUserDTO"  type="com.gdu.moovod.domain.SleepUserDTO" />
 		<typeAlias alias="LeaveUserDTO"  type="com.gdu.moovod.domain.LeaveUserDTO" />
 		<typeAlias alias="UserAccessDTO" type="com.gdu.moovod.domain.UserAccessDTO" />
+	  <!-- bang -->
+		<typeAlias alias="Qna" type="com.gdu.moovod.domain.QnaDTO"/>
+    <typeAlias alias="FaqDTO" type="com.gdu.moovod.domain.FaqDTO"/>
+    <typeAlias alias="FQueryDTO" type="com.gdu.moovod.domain.FQueryDTO"/>
+    <typeAlias alias="Notice" type="com.gdu.moovod.domain.NoticeDTO"/>
+	  <!-- park -->
+    <typeAlias alias="ItemDTO" type="com.gdu.moovod.domain.ItemDTO" />
+    <typeAlias alias="ItemCartDTO" type="com.gdu.moovod.domain.ItemCartDTO" />
+	  <!-- jo -->
+    <typeAlias alias="ReviewsDTO"       type="com.gdu.moovod.domain.UserDTO" />
 	</typeAliases>
 
 </configuration>

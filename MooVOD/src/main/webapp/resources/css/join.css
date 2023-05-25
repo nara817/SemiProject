@@ -1,17 +1,42 @@
 @charset "UTF-8";
-*{
-	margin: 0;
-	padding:0;
+* {
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust this value as needed */
+}
+
+#formContent {
+  text-align: center;
+}
+
 #input {
-	width: 700px;
-	
+  width: 700px;
 }
-
-
-
 
 /* float 속성 해제 */
-.clearfix{
-	clear: both;
+.clearfix {
+  clear: both;
+}
+
+#loginBox_input {
+  color: #000000;
+  font-weight: bold;
+  font-size: 32px;
+
+  /*모두 대문자로 변경 */
+  text-transform: uppercase;
+
+  padding: 5px;
+
+  /* 텍스트에 그라데이션 효과주기 */
+  background: linear-gradient(to right, #270a09, #8ca6ce);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

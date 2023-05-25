@@ -18,7 +18,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="${contextPath}/resources/home/css/styles.css" rel="stylesheet" />
 <meta charset="UTF-8">
-<title>회원가입 페이지</title>
+<title>MooVOD : 회원가입</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
 
@@ -347,9 +347,12 @@
 </head>
 <body>
 
-  <div>
-  
-    <h1>회원 가입</h1>
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+    
+      <div class="loginBox_input">
+         <div class="loginBoxTitle" id="loginBox_input">Join Page</div>
+
   
     <div>* 표시는 필수 입력사항입니다.</div>
     
@@ -491,18 +494,11 @@
         <button>가입하기</button>
         <input type="button" value="취소하기">
       </div>
-    
     </form>
+    </div>
+  </div>
   
   </div>
-          <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
   
 </body>
 </html>

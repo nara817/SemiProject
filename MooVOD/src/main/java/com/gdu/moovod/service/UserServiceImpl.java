@@ -517,6 +517,7 @@ public class UserServiceImpl implements UserService {
 			if("0".equals(cntUserYn)) { //유저가 존재하지 않을 때
 					out.println("<script>");
 					out.println("alert('일치하지 않는 비밀번호 입니다.');");
+					out.println("location.href='" + request.getContextPath() + "/user/mypage.do';");
 					out.println("</script>");
 					out.flush();
 					out.close();			

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MooVOD : 비밀번호</title>
 <script src="${contextPath}/resources/js/jquery-3.6.1.min.js"></script>
 <script>
   

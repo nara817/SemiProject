@@ -3,13 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%-- <%@include file="../head.jsp" %> --%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MooVOD : 약관동의</title>
 <!-- Bootstrap Checkbox -->
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -66,9 +65,13 @@
 </head>
 <body>
 
-  <div>
+  <div class="wrapper fadeInDown">
+  <div id="formContent">
+    
+    <div class="loginBox_input">
+       <div class="loginBoxTitle" id="loginBox_input">MooVOD 이용 약관</div>
   
-    <h1>MooVOD 이용 약관</h1>
+  </div>
     
     <form id="frmAgree" action="${contextPath}/user/join.form">
       <div class="checkbox_group">
@@ -312,12 +315,12 @@
       </div>
       
 
-      <div class="page_turn">
+      <div class="formFooter">
         <input type="button" value="취소" id="btnCancel">
         <button>다음</button>
       </div>
-    
     </form>
+    </div>
     
   </div>
   

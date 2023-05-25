@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MooVOD : 임시 비밀번호</title>
 <script src="${contextPath}/resources/js/jquery-3.6.4.min.js"></script>
 <script>
 

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MooVOD : 임시 비밀번호발송</title>
 <script src="${contextPath}/resources/js/jquery-3.6.1.min.js"></script>
 <script>
 
@@ -24,7 +24,7 @@
 
       <div>
         <a href="${contextPath}/user/login.form">로그인</a>
-        <a href="${contextPath}/user/findPw.form">비밀번호변경</a>
+        <a href="${contextPath}/user/modifyPw.form">비밀번호변경</a>
       </div>
       
     </form>

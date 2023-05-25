@@ -314,6 +314,7 @@
         , GENDER = #{gender}
         , EMAIL = #{email}
         , MOBILE = #{mobile}
+        , MOBILE = #{mobile}
     WHERE ID = #{id}
 </update> 
 

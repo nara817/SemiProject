@@ -174,7 +174,7 @@ display: flex;
 
 <nav class="menu sticky-top ">
   <div class="nav nav-tabs justify-content-center " id="nav-tab" role="tablist">
-    <div class="nav-link text-black" id="nav-STORE-tab"><a href="${contextPath}/product/list.do">STORE</a></div>
+    <div class="nav-link text-black" id="nav-STORE-tab"><a href="${contextPath}/item/list.do">STORE</a></div>
     <div class="nav-link text-black" id="nav-STORE-tab"><a href="${contextPath}/vod/vodList.form">VOD</a></div>
     <div class="nav-link text-black" id="nav-STORE-tab"><a href="${contextPath}/board/reviews/list.do">REVIEW</a></div>
   </div>
