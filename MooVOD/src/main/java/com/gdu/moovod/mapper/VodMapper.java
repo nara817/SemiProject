@@ -24,4 +24,5 @@ public interface VodMapper {
   public List<VodPurchaseDTO> vodPurchaseList(String id); // id에 맞는 구매내역 가져오기 세션아이디!(이때 영화번호는 영화 DTO를 해야하나?)
   public int zzimAdd(VodZzimDTO vodZzimDTO); // 찜 한 아이디 영화 테이블 저장
   public List<VodZzimDTO> myZzim(String id);   // 나의 찜 목록
+  public int zzimCount(int vodNo);
 }

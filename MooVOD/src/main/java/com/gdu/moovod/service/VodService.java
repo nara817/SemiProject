@@ -26,4 +26,5 @@ public interface VodService {
   public List<VodPurchaseDTO> vodPurchaseList(String id); // 아이디 세션으로 구매내역 불러오기
   public int zzimAdd(VodZzimDTO vodZzimDTO);
   public List<VodZzimDTO> myZzim(String id);
+  public int zzimCount(int vodNo);
 }

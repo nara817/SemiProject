@@ -1,7 +1,7 @@
 package com.gdu.moovod.controller;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -48,6 +48,7 @@ public class VodController {
   @GetMapping("vodDetail.form")
   public String vodDetail(HttpServletRequest request, Model model) {
     model.addAttribute("vodDetail", vodService.vodGetByNo(request));
+    model.addAttribute("zzimCount", vodService.zzimCount(Integer.parseInt(request.getParameter("vodNo")))); // 찜 카운트 넘겨주기 
     return "vod/vodDetail";
   }
   

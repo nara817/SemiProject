@@ -98,12 +98,12 @@
     
     
     .likes {
-      margin-left: 24px;
-      cursor: pointer;
-      font-size: 30px;
-      color: red;
+    margin-left: 24px;
+    cursor: pointer;
+    font-size: 30px;
+    color: red;
     }
-    
+
     
     .likes:before {
       content: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/icon_like.png");
@@ -112,7 +112,19 @@
       padding-right: 7px;
        font-size: 100px;
     }
-  
+
+.likes::after {
+  content: attr(data-likes);
+  position: absolute;
+  top: -8px;
+  left: 100%;
+  padding: 2px 6px;
+  font-size: 14px;
+  color: white;
+  background-color: red;
+  border-radius: 4px;
+  white-space: nowrap;
+}
   }
   
   .description {
@@ -179,8 +191,11 @@
         <div class="details">
           <div class="title1">${vodDetail.vodTitle}</div>
           <c:if test="${sessionScope.loginId ne null}">
-           <span class="likes" onclick="fnZzim(${vodDetail.vodNo})">찜</span>
+           <span class="likes" onclick="fnZzim(${vodDetail.vodNo})">찜 ${zzimCount}</span>
           </c:if>
+          <c:if test="${sessionScope.loginId eq null}">
+           <span class="likes">찜 ${zzimCount} </span>
+          </c:if>          
         </div> <!-- end details -->
       </div> <!-- end hero -->
       <div class="description">

@@ -20,6 +20,13 @@
      WHERE A.RN BETWEEN #{begin} AND #{end}
   </select> -->
 
+  <!-- 찜 한 사람 카운트 -->
+  <select id="zzimCount" parameterType="int" resultType="int">
+    SELECT COUNT(*)
+      FROM VOD_ZZIM
+     WHERE VOD_NO = #{vodNo}
+  </select>
+
   <!-- vod 전체 리스트 -->
 	<select id="vodList" resultType="VodDTO">
 	  SELECT VOD_NO, VOD_TITLE, VOD_PRICE, VOD_PHOTO, VOD_CATEGORY, VOD_STAR

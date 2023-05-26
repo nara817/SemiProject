@@ -79,6 +79,12 @@ public class VodServiceImpl implements VodService {
     model.addAttribute("vodYoutube", vodDTO);
     return vodMapper.vodOrderDone(vodPurchaseDTO);
   }
+  
+  // 찜 카운트
+  @Override
+  public int zzimCount(int vodNo) {
+    return vodMapper.zzimCount(vodNo);
+  }
 
   // 유저 id는 세션값으로 가져와야해서 추후 수정 필요
   @Override
