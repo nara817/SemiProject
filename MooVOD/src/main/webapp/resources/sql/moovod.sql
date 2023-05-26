@@ -172,15 +172,15 @@ CREATE TABLE VOD_ZZIM(
 ------------------------------------------------------------------------------------------------ 리뷰게시판 테이블
 
 CREATE TABLE REVIEWS(
-    REVIEW_NO                  NUMBER NOT NULL,            -- PK
-    REVIEW_CATEGORY       NUMBER NOT NULL
-    REVIEW_TITLE        VARCHAR2(1000 BYTE) NOT NULL,
-    ID                 VARCHAR2(40 BYTE) NOT NULL,  --FK (USER TABLE)
-    REVIEW_CONTENT      CLOB,
-    REVIEW_CREATED_AT   TIMESTAMP,                     
-    REVIEW_MODIFIED_AT  TIMESTAMP,
-    REVIEW_HITS         NUMBER DEFAULT 0 NOT NULL,
-    REVIEW_STAR         NUMBER NOT NULL
+    REVIEW_NO             NUMBER NOT NULL,            -- PK
+    REVIEW_CATEGORY       VARCHAR2(50 BYTE) NOT NULL,
+    REVIEW_TITLE          VARCHAR2(1000 BYTE) NOT NULL,
+    ID                    VARCHAR2(40 BYTE) NOT NULL,  --FK (USER TABLE)
+    REVIEW_CONTENT        CLOB,
+    REVIEW_CREATED_AT     TIMESTAMP,                     
+    REVIEW_MODIFIED_AT    TIMESTAMP,
+    REVIEW_HITS           NUMBER DEFAULT 0 NOT NULL,
+    REVIEW_STAR           NUMBER NOT NULL
     
 );
 
@@ -628,9 +628,9 @@ DROP SEQUENCE QCOMMENT_SEQ;
 
 ----------------------------------------------------------DROP ITEM 시퀀스
 
-DROP SEQUENCE CART_ID;
-DROP SEQUENCE ORDER_ID;
-DROP SEQUENCE PURCHASE_ID;
+DROP SEQUENCE CART_ID_SEQ;
+DROP SEQUENCE ORDER_ID_SEQ;
+DROP SEQUENCE PURCHASE_ID_SEQ;
 
 
 

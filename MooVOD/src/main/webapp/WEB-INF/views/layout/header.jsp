@@ -146,7 +146,6 @@ display: flex;
                         </c:if>
                         <li class="nav-item"><a class="nav-link" href="${contextPath}/main">고객센터</a></li>
                     </ul>
-               
                 </div>
             </div>
         </nav>

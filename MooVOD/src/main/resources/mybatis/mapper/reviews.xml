@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.moovod.mapper.ReviewsMapper">
+<!--  
+  <select id="getReviewsList" resultType="ReviewsDTO">
+    SELECT REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, ID, REVIEW_CONTENT,
+    REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS, REVIEW_STAR
+    FROM REVIEWS
+    ORDER BY REVIEW_NO DESC
+  </select>
+-->
+  <insert id="insertReviews" parameterType="ReviewsDTO">
+    INSERT INTO REVIEWS
+    (REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, ID, REVIEW_CONTENT, REVIEW_CREATED_AT,
+    REVIEW_MODIFIED_AT, REVIEW_HITS, REVIEW_STAR)
+    VALUES
+    (REVIEWS_SEQ.NEXTVAL, #{reviewCategory}, #{reviewTitle}, #{id}, #{reviewContent}, TO_CHAR(SYSDATE,
+    'YYYY-MM-DD HH24:MI:SS'), TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+    #{reviewHits}, #{reviewStar})
+  </insert>
+
+  <select id="selectReviewsByNo" parameterType="int"
+    resultType="ReviewsDTO">
+    SELECT REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, ID, REVIEW_CONTENT, REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS, REVIEW_STAR
+    FROM REVIEWS
+    WHERE REVIEW_NO = #{reviewNo}
+  </select>
+
+  <update id="up" parameterType="int">
+    UPDATE REVIEWS
+    SET REVIEW_HITS = REVIEW_HITS + 1
+    WHERE REVIEW_NO = #{reviewNo}
+  </update>
+
+  <update id="updateReviews" parameterType="ReviewsDTO">
+    UPDATE REVIEWS
+    SET 
+      REVIEW_CATEGORY = #{reviewCategory}
+    , REVIEW_TITLE = #{reviewTitle}
+    , REVIEW_CONTENT = #{reviewContent}
+    , REVIEW_MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+    , REVIEW_STAR = #{reviewStar}
+    
+    WHERE REVIEW_NO = #{reviewNo}
+  </update>
+
+  <delete id="deleteReviews" parameterType="int">
+    DELETE
+    FROM REVIEWS
+    WHERE REVIEW_NO = #{reviewNo}
+  </delete>
+
+
+
+
+
+
+
+
+<!-- pagination -->
+
+
+  <select id="getReviewsCount" resultType="int">
+    SELECT COUNT(*)
+    FROM REVIEWS
+  </select>
+  
+  
+  <!-- DEPARTMENTS와 EMPLOYEES의 JOIN 결과를 저장할 resultMap 만들기 -->
+  <resultMap type="ReviewsDTO" id="ReviewsMap">
+    <id column="REVIEW_NO" property="reviewNo" />
+    <result column="REVIEW_CATEGORY" property="reviewCategory" />
+    <result column="REVIEW_TITLE" property="reviewTitle" />
+    <result column="ID" property="id" />
+    <result column="REVIEW_CONTENT" property="reviewContent" />
+    <result column="REVIEW_CREATED_AT" property="reviewCreatedAt" />
+    <result column="REVIEW_MODIFIED_AT" property="reviewModifiedAt" />
+    <result column="REVIEW_HITS" property="reviewHits" />
+    <result column="REVIEW_STAR" property="reviewStar" />
+</resultMap>
+  
+  
+  
+  
+  <!-- pagination -->
+  <!--  
+  <select id="getReviewsListUsingPagination" parameterType="Map" resultMap="ReviewsMap">
+    SELECT REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, ID, REVIEW_CONTENT, REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS, REVIEW_STAR
+      FROM (
+      SELECT
+            REVIEW_NO,
+            REVIEW_CATEGORY,
+            REVIEW_TITLE,
+            ID,
+            REVIEW_CONTENT,
+            REVIEW_CREATED_AT,
+            REVIEW_MODIFIED_AT,
+            REVIEW_HITS,
+            REVIEW_STAR,
+            ROW_NUMBER() OVER (ORDER BY ${orderColumn} ${order}) AS RN
+        FROM
+        REVIEWS
+        ) A
+        WHERE A.RN BETWEEN #{begin} AND #{end}
+  </select>
+  
+  -->
+  
+  
+  
+  <select id="getReviewsList" parameterType="Map" resultMap="ReviewsMap">
+	SELECT  REVIEW_NO, REVIEW_CATEGORY, REVIEW_TITLE, ID, REVIEW_CONTENT, REVIEW_CREATED_AT, REVIEW_MODIFIED_AT, REVIEW_HITS, REVIEW_STAR
+	FROM (
+      SELECT
+            REVIEW_NO,
+            REVIEW_CATEGORY,
+            REVIEW_TITLE,
+            ID,
+            REVIEW_CONTENT,
+            REVIEW_CREATED_AT,
+            REVIEW_MODIFIED_AT,
+            REVIEW_HITS,
+            REVIEW_STAR,
+            ROW_NUMBER() OVER (ORDER BY ${orderColumn} ${order}) AS RN
+        FROM
+        REVIEWS
+        
+	<where>
+		<if test="searchColumn != '' and query != ''">
+			${searchColumn} LIKE '%' || #{query} || '%'
+		</if>
+	</where>) A
+	WHERE A.RN BETWEEN #{begin} AND #{end}
+  </select>
+  
+  
+
+  
+
+<select id="getReviewsSearchCount" parameterType="Map" resultType="int">
+    SELECT COUNT(R.REVIEW_NO)
+    FROM REVIEWS R
+    <where>
+        <if test="searchColumn != '' and query != ''">
+            ${searchColumn} LIKE CONCAT('%', CONCAT(#{query}, '%'))
+        </if>
+    </where>
+</select>
+
+
+  <select id="getAutoComplete" parameterType="Map" resultMap="ReviewsMap">
+  SELECT DISTINCT ${searchColumn}
+  FROM REVIEWS
+  WHERE ${searchColumn} LIKE CONCAT(#{query}, '%')
+</select>
+
+</mapper>
